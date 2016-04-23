@@ -1,0 +1,1 @@
+# Swinject-CodeGeneration
