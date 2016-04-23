@@ -1,0 +1,6 @@
+PersonType; InjectablePerson; initializer
+PersonType; InjectablePerson
+PersonType; PersonType
+PersonType; InjectablePerson; ; argumentName:ArgumentType
+PersonType; InjectablePerson; ; argumentName:ArgumentType; ArgumentTypeWithoutSpecificName; title:String; String
+PersonType; InjectablePerson; initializer; argumentName:ArgumentType; ArgumentTypeWithoutSpecificName; title:String; String
