@@ -1,2 +1,8 @@
 ## Mac
 .DS_Store
+bin/xcodeproj
+bin/sandbox-pod
+bin/pod
+bin/fuzzy_match
+bin/bundler
+.bundle
