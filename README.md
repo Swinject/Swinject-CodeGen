@@ -8,6 +8,33 @@ We are open for every kind of feedback, improvements of the generated code/templ
 We propose a method to get rid of duplicate use of class values and namestrings, by generating explicit functions for registering and resolving.
 Doing this, we also can generate typed tuples to use when resolving, thus allowing better documented and less error-prone code.
 
+## Installation
+
+We aim to support carthage in the near future
+
+### Cocoapods
+
+Add
+
+```
+pod 'Swinject-CodeGeneration',  :git => 'https://github.com/Swinject/Swinject-CodeGeneration.git'
+```
+
+to your podfile.
+
+## Integration
+1. Define your dependencies in a .csv file (see below and example file)
+2. Add a call to generate the code as build script phase:
+
+```Shell
+$PODS_ROOT/Swinject-CodeGeneration/swinject_cg baseInput.csv extensions/baseContainerExtension.swift
+```
+
+3. Add the generated file (here: `extensions/baseContainerExtension.swift`) to xcode
+4. Repeat if you need to support multiple targets/have multiple input files.
+
+The code is then generated at every build run.
+
 ## The Issue
 
 We love using swinject for dependency injection.
@@ -276,8 +303,6 @@ We found our code to become much more convenient to read and write, due to reduc
 Changing some definition immediately leads to information, where an error will occur.
 We were able to replace all our occurences of `.resolve(` and `.register(` using the current implementation.
 
-## Distribution
-We aim to distribute this using cocoapods and carthage in the near future.
 
 ## Contributors
 The main contributors for this are [Daniel Dengler](https://github.com/ddengler), [David Kraus](https://github.com/davidkraus) and [Wolfgang Lutz](https://github.com/lutzifer).
