@@ -1,3 +1,4 @@
+#!/usr/bin/env ruby
 require "erb"
 require "Shellwords"
 require "set"
@@ -103,14 +104,16 @@ ARGV[0..-2].each do |filename|
   }
 end
 
+templatesFolder = File.expand_path(File.dirname(__FILE__))
+
 fileToWriteTo = File.open(ARGV[-1], 'w')
-fileToWriteTo.puts ERB.new(File.read('erb/template.erb'), nil, "-").result
+fileToWriteTo.puts ERB.new(File.read("#{templatesFolder}/container.erb"), nil, "-").result
 puts "Generated code in #{ARGV[-1]}"
 fileToWriteTo.close
 
 migrationFileName = "#{ARGV[-1]}.migration.sh"
 
 migrationFileToWriteTo = File.open(migrationFileName, 'w')
-migrationFileToWriteTo.puts ERB.new(File.read('erb/migration.erb'), nil, "-").result
+migrationFileToWriteTo.puts ERB.new(File.read("#{templatesFolder}/migration.erb"), nil, "-").result
 puts "Generated migration code in #{migrationFileName}"
 migrationFileToWriteTo.close
