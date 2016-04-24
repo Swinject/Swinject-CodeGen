@@ -6,3 +6,5 @@ bin/pod
 bin/fuzzy_match
 bin/bundler
 .bundle
+ExampleScript/containerExtension.swift.migration.sh
+ExampleScript/containerExtension.swift
