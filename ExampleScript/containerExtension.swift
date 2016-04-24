@@ -16,6 +16,10 @@ extension Resolvable {
         return self.resolve(PersonType.self)!
     }
 
+    func resolveAnotherPersonType() -> AnotherPersonType {
+        return self.resolve(AnotherPersonType.self)!
+    }
+
     func resolveInjectablePerson(argumentName: ArgumentType) -> InjectablePerson {
         return self.resolve(PersonType.self, argument: argumentName)! as! InjectablePerson
     }
@@ -39,6 +43,10 @@ extension Resolvable {
 
     func registerPersonType(registerClosure: (resolver: ResolverType) -> (PersonType)) -> ServiceEntry<PersonType> {
         return (self as! Container).register(PersonType.self, factory: registerClosure)
+    }
+
+    func registerAnotherPersonType(registerClosure: (resolver: ResolverType) -> (AnotherPersonType)) -> ServiceEntry<AnotherPersonType> {
+        return (self as! Container).register(AnotherPersonType.self, factory: registerClosure)
     }
 
     func registerInjectablePerson(registerClosure: (resolver: ResolverType, argumentName: ArgumentType) -> (InjectablePerson)) -> ServiceEntry<PersonType> {
