@@ -27,7 +27,7 @@ to your podfile.
 2. Add a call to generate the code as build script phase:
 
 ```Shell
-$PODS_ROOT/Swinject-CodeGeneration/swinject_cg baseInput.csv extensions/baseContainerExtension.swift
+$PODS_ROOT/Swinject-CodeGeneration/swinject_cg -i baseInput.csv -o extensions/baseContainerExtension.swift
 ```
 
 3. Add the generated file (here: `extensions/baseContainerExtension.swift`) to xcode
@@ -285,9 +285,9 @@ We can provide more examples if desired.
 The Integration is currently done by calling the following code in a very early (i.e. before compilation) build phase:
 ```SH
 cd ${SRCROOT}/CodeGeneration/
-ruby build.rb baseInput.csv extensions/baseContainerExtension.swift
-ruby build.rb iosInput.csv extensions/iosContainerExtension.swift
-ruby build.rb tvosInput.csv extensions/tvosContainerExtension.swift
+swinject_cg -i baseInput.csv -o extensions/baseContainerExtension.swift
+swinject_cg -i iosInput.csv -o extensions/iosContainerExtension.swift
+swinject_cg -i tvosInput.csv -o extensions/tvosContainerExtension.swift
 ```
 
 The resulting extension files are added to xcode and given appropriate target settings.

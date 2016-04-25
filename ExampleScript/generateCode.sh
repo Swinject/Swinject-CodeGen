@@ -1,2 +1,2 @@
 #/bin/sh
-../swinject_cg example.csv containerExtension.swift
+../swinject_cg -i example.csv -o containerExtension.swift
