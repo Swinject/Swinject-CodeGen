@@ -1,8 +1,14 @@
 ## Mac
 .DS_Store
+
+## Bundler bin files (binstubs)
+.bundle
 bin/xcodeproj
 bin/sandbox-pod
 bin/pod
 bin/fuzzy_match
 bin/bundler
-.bundle
+
+# Generated Code, does not need to checked in
+ExampleScript/containerExtension.swift.migration.sh
+ExampleScript/containerExtension.swift

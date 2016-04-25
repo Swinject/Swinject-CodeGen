@@ -89,9 +89,15 @@ def parseInputFile(inputFilename)
             end
         end
 
-        targetClass = array[1]
-        targetClassName = targetClass.gsub("<", "").gsub(">", "").gsub(".", "")
         baseClass = array[0]
+
+        targetClass = array[1]
+
+        if targetClass.nil?
+          targetClass = baseClass
+        end
+
+        targetClassName = targetClass.gsub("<", "").gsub(">", "").gsub(".", "")
 
         name = array[2]
 

@@ -9,6 +9,8 @@ do
         -e s/.register\(PersonType.self\)/.registerInjectablePerson/g \
         -e s/.resolve\(PersonType.self\)\!/.resolvePersonType\(\)/g \
         -e s/.register\(PersonType.self\)/.registerPersonType/g \
+        -e s/.resolve\(AnotherPersonType.self\)\!/.resolveAnotherPersonType\(\)/g \
+        -e s/.register\(AnotherPersonType.self\)/.registerAnotherPersonType/g \
         -e s/.resolve\(PersonType.self\)\!/.resolveInjectablePerson\(argumentName:\ ArgumentType\)/g \
         -e s/.register\(PersonType.self\)/.registerInjectablePerson/g \
         -e s/.resolve\(PersonType.self\)\!/.resolveInjectablePerson\(argumentName:\ ArgumentType,\ argumenttypewithoutspecificname:\ ArgumentTypeWithoutSpecificName,\ title:\ String,\ string:\ String\)/g \
