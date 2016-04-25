@@ -2,120 +2,179 @@
 require "erb"
 require "Shellwords"
 require "set"
+require 'optparse'
 
-@dependencies = Set.new
-@contentArray = []
-@migrationArray = []
+@DEFAULT_OUTPUT_FILE = "containerExtension.swift"
 
-inputFilename = ARGV[1]
+@options = {
+  :SKIP_MIGRATION  => false,
+  :INPUT_FILE => nil,
+  :OUTPUT_FILE => @DEFAULT_OUTPUT_FILE
+}
 
-f = File.open(inputFilename)
+@parser = OptionParser.new do |opts|
+  opts.banner = "Usage: swinject_cg [options]"
 
-f.each_line {|line|
-  if line.nil? || line.chomp.empty?
-    # ignores empty lines
-  elsif line.start_with?("#")
-     # detect command
-    if(line.start_with?("#ADD_DEPENDENCY "))
-      @dependencies.add(line.split(" ")[1])
-    elsif(line.start_with?("# ADD_DEPENDENCY "))
-      @dependencies.add(line.split(" ")[2])
-    end
-  elsif line.start_with?("//")
-      # ignores comments
-  else
-      # UIViewController, TelecastViewController, name, Telecast2, Telecast3
-      array = line.split(";").map { |a| a.strip }
-      arguments = array[3..-1]
-      argumentHashes = nil
-      unless arguments.nil?
-          arguments.reject { |a| a.empty? }
-          argumentHashes = arguments.map do |a|
-              hash = nil
-              if(a.include?(":"))
-                  hash = {
-                      :argumentName => a.split(":").first.strip,
-                      :argumentType => a.split(":").last.strip
-                  }
-              else
-                  hash = {
-                      :argumentName => a.downcase,
-                      :argumentType => a
-                  }
-              end
-              hash
-          end
-      end
+  opts.on("-iINPUT", "--input=INPUT", "The file containing the definitions, currently only .csv is supported (separated by semicolon).") do |i|
+    @options[:INPUT_FILE] = i
+  end
 
-      targetClass = array[1]
-      targetClassName = targetClass.gsub("<", "").gsub(">", "")
-      baseClass = array[0]
+  opts.on("-oOUTPUT", "--output=OUTPUT", "The file to write to. Default is #{@DEFAULT_OUTPUT_FILE}") do |o|
+    @options[:OUTPUT_FILE] = o
+  end
 
-      name = array[2]
+  opts.on("-s", "--skip_migration", "Does not generate migration.sh files.") do |v|
+    @options[:SKIP_MIGRATION] = true
+  end
 
-      hasNoName = (name.nil? || name.empty?)
-
-      registerFunctionSignature = "register"
-      registerFunctionSignature = registerFunctionSignature + targetClassName
-      registerFunctionSignature = registerFunctionSignature + "_#{name}" unless hasNoName
-      registerFunctionSignature = registerFunctionSignature + "(registerClosure: (resolver: ResolverType"
-      registerFunctionSignature = registerFunctionSignature + ", " unless (argumentHashes.nil? || argumentHashes.empty?)
-      registerFunctionSignature = registerFunctionSignature + argumentHashes.map {|a| "#{a[:argumentName]}: #{a[:argumentType]}"}.join(", ") unless (argumentHashes.nil? || argumentHashes.empty?)
-      registerFunctionSignature = registerFunctionSignature + ") -> (#{targetClass})) -> ServiceEntry<#{baseClass}>"
-
-      registerFunctionCall = ".register("
-      registerFunctionCall = registerFunctionCall + "#{baseClass}.self,"
-      registerFunctionCall = registerFunctionCall + " name: \"#{name}\"," unless hasNoName
-
-      resolveFunctionSignature = "resolve"
-      resolveFunctionSignature = resolveFunctionSignature + targetClassName
-      resolveFunctionSignature = resolveFunctionSignature + "_#{name}" unless hasNoName
-      resolveFunctionSignature = resolveFunctionSignature + "("
-      resolveFunctionSignature = resolveFunctionSignature + argumentHashes.map {|a| "#{a[:argumentName]}: #{a[:argumentType]}"}.join(", ") unless (argumentHashes.nil? || argumentHashes.empty?)
-      resolveFunctionSignature = resolveFunctionSignature + ") -> #{targetClass}"
-
-      resolveFunctionCall = ".resolve("
-      resolveFunctionCall = resolveFunctionCall + "#{baseClass}.self"
-      resolveFunctionCall = resolveFunctionCall + ", name: \"#{name}\"" unless hasNoName
-
-      hash = {
-          :baseClass => baseClass,
-          :targetClass => targetClass,
-          :targetClassName => targetClassName,
-          :name => name,
-          :arguments => argumentHashes,
-          :resolveFunctionSignature => resolveFunctionSignature,
-          :resolveFunctionCall => resolveFunctionCall,
-          :registerFunctionSignature => registerFunctionSignature,
-          :registerFunctionCall => registerFunctionCall,
-      }
-      @contentArray.push hash
-
-      registerFunctionCallWithoutLastComma = registerFunctionCall.reverse.sub(",", "").reverse
-
-      migrationHash = {
-        :resolveFunctionSignatureRegex => Shellwords.escape(".#{resolveFunctionSignature.split("->").first.strip}"),
-        :resolveFunctionCall => Shellwords.escape("#{resolveFunctionCall})!"),
-        :registerFunctionSignatureRegex => Shellwords.escape(".#{registerFunctionSignature.split("(").first}"),
-        :registerFunctionCall => Shellwords.escape("#{registerFunctionCallWithoutLastComma})")
-      }
-      @migrationArray.push migrationHash
-
+  opts.on("-h", "--help", "Prints this help") do
+    puts opts
+    exit
+  end
 end
 
+def main
+  @parser.parse!
 
-templatesFolder = File.expand_path(File.dirname(__FILE__))
+  definitionHash = parseInputFile(@options[:INPUT_FILE])
 
-outputFilename = ARGV[1]
+  writeContainerFile(definitionHash, @options[:OUTPUT_FILE])
 
-fileToWriteTo = File.open(outputFilename, 'w')
-fileToWriteTo.puts ERB.new(File.read("#{templatesFolder}/container.erb"), nil, "-").result
-puts "Generated code in #{outputFilename}"
-fileToWriteTo.close
+  unless @options[:SKIP_MIGRATION]
+    writeMigrationFile(definitionHash, @options[:OUTPUT_FILE])
+  end
+end
 
-migrationFileName = "#{outputFilename}.migration.sh"
+def parseInputFile(inputFilename)
+  returnHash = {
+    :DEPENDENCIES => Set.new,
+    :DEFINITIONS => []
+  }
 
-migrationFileToWriteTo = File.open(migrationFileName, 'w')
-migrationFileToWriteTo.puts ERB.new(File.read("#{templatesFolder}/migration.erb"), nil, "-").result
-puts "Generated migration code in #{migrationFileName}"
-migrationFileToWriteTo.close
+  f = File.open(inputFilename)
+
+  f.each_line { |line|
+    if line.nil? || line.chomp.empty?
+      # ignores empty lines
+    elsif line.start_with?("#")
+       # detect command
+      if(line.start_with?("#ADD_DEPENDENCY "))
+        returnHash[:DEPENDENCIES].add(line.split(" ")[1])
+      elsif(line.start_with?("# ADD_DEPENDENCY "))
+        returnHash[:DEPENDENCIES].add(line.split(" ")[2])
+      end
+    elsif line.start_with?("//")
+        # ignores comments
+    else
+        # UIViewController, TelecastViewController, name, Telecast2, Telecast3
+        array = line.split(";").map { |a| a.strip }
+        arguments = array[3..-1]
+        argumentHashes = nil
+        unless arguments.nil?
+            arguments.reject { |a| a.empty? }
+            argumentHashes = arguments.map do |a|
+                hash = nil
+                if(a.include?(":"))
+                    hash = {
+                        :argumentName => a.split(":").first.strip,
+                        :argumentType => a.split(":").last.strip
+                    }
+                else
+                    hash = {
+                        :argumentName => a.downcase,
+                        :argumentType => a
+                    }
+                end
+                hash
+            end
+        end
+
+        targetClass = array[1]
+        targetClassName = targetClass.gsub("<", "").gsub(">", "")
+        baseClass = array[0]
+
+        name = array[2]
+
+        hasNoName = (name.nil? || name.empty?)
+
+        registerFunctionSignature = "register"
+        registerFunctionSignature = registerFunctionSignature + targetClassName
+        registerFunctionSignature = registerFunctionSignature + "_#{name}" unless hasNoName
+        registerFunctionSignature = registerFunctionSignature + "(registerClosure: (resolver: ResolverType"
+        registerFunctionSignature = registerFunctionSignature + ", " unless (argumentHashes.nil? || argumentHashes.empty?)
+        registerFunctionSignature = registerFunctionSignature + argumentHashes.map {|a| "#{a[:argumentName]}: #{a[:argumentType]}"}.join(", ") unless (argumentHashes.nil? || argumentHashes.empty?)
+        registerFunctionSignature = registerFunctionSignature + ") -> (#{targetClass})) -> ServiceEntry<#{baseClass}>"
+
+        registerFunctionCall = ".register("
+        registerFunctionCall = registerFunctionCall + "#{baseClass}.self,"
+        registerFunctionCall = registerFunctionCall + " name: \"#{name}\"," unless hasNoName
+
+        resolveFunctionSignature = "resolve"
+        resolveFunctionSignature = resolveFunctionSignature + targetClassName
+        resolveFunctionSignature = resolveFunctionSignature + "_#{name}" unless hasNoName
+        resolveFunctionSignature = resolveFunctionSignature + "("
+        resolveFunctionSignature = resolveFunctionSignature + argumentHashes.map {|a| "#{a[:argumentName]}: #{a[:argumentType]}"}.join(", ") unless (argumentHashes.nil? || argumentHashes.empty?)
+        resolveFunctionSignature = resolveFunctionSignature + ") -> #{targetClass}"
+
+        resolveFunctionCall = ".resolve("
+        resolveFunctionCall = resolveFunctionCall + "#{baseClass}.self"
+        resolveFunctionCall = resolveFunctionCall + ", name: \"#{name}\"" unless hasNoName
+
+        hash = {
+            :baseClass => baseClass,
+            :targetClass => targetClass,
+            :targetClassName => targetClassName,
+            :name => name,
+            :arguments => argumentHashes,
+            :resolveFunctionSignature => resolveFunctionSignature,
+            :resolveFunctionCall => resolveFunctionCall,
+            :registerFunctionSignature => registerFunctionSignature,
+            :registerFunctionCall => registerFunctionCall,
+        }
+
+
+        returnHash[:DEFINITIONS].push hash
+  end
+  }
+
+ returnHash
+end
+
+def templatesFolder
+  File.expand_path(File.dirname(__FILE__))
+end
+
+def writeContainerFile(inputHash, outputFilename)
+  @contentArray = inputHash[:DEFINITIONS]
+  @dependencies = inputHash[:DEPENDENCIES]
+
+  fileToWriteTo = File.open(outputFilename, 'w')
+  fileToWriteTo.puts ERB.new(File.read("#{templatesFolder()}/container.erb"), nil, "-").result
+  puts "Generated code in #{outputFilename}"
+  fileToWriteTo.close
+end
+
+def writeMigrationFile(inputHash, outputFilename)
+  @migrationArray = []
+
+  inputHash[:DEFINITIONS].each do |definition|
+    registerFunctionCallWithoutLastComma = definition[:registerFunctionCall].reverse.sub(",", "").reverse
+
+    migrationHash = {
+      :resolveFunctionSignatureRegex => Shellwords.escape(".#{definition[:resolveFunctionSignature].split("->").first.strip}"),
+      :resolveFunctionCall => Shellwords.escape("#{definition[:resolveFunctionCall]})!"),
+      :registerFunctionSignatureRegex => Shellwords.escape(".#{definition[:registerFunctionSignature].split("(").first}"),
+      :registerFunctionCall => Shellwords.escape("#{registerFunctionCallWithoutLastComma})")
+    }
+
+    @migrationArray.push migrationHash
+  end
+
+  migrationFileName = "#{outputFilename}.migration.sh"
+  migrationFileToWriteTo = File.open(migrationFileName, 'w')
+  migrationFileToWriteTo.puts ERB.new(File.read("#{templatesFolder()}/migration.erb"), nil, "-").result
+  puts "Generated migration code in #{migrationFileName}"
+  migrationFileToWriteTo.close
+end
+
+main()
