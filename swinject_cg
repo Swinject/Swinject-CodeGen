@@ -4,7 +4,6 @@ require "Shellwords"
 require "set"
 require "optparse"
 require "./CSVParser"
-require "./CSVSerializer"
 require "./YMLParser"
 require "./YMLSerializer"
 
@@ -53,7 +52,7 @@ def main
     if inputFilename.end_with?("csv")
       YMLSerializer.new.serializeHashToYML(definitionHash, "#{inputFilename}.yml")
     elsif inputFilename.end_with?("yml")
-      CSVSerializer.new.serializeHashToCSV(definitionHash, "#{inputFilename}.csv")
+      serializeHashToCSV(definitionHash, "#{inputFilename}.csv")
     end
   end
 
@@ -152,6 +151,15 @@ def prepareDefinitions(hash)
     definition[:registerFunctionSignature] = registerFunctionSignature
     definition[:registerFunctionCall] = registerFunctionCall
   end
+end
+
+def serializeHashToCSV(hash, outputFilename)
+  @contentArray = hash[:DEFINITIONS]
+  @dependencies = hash[:DEPENDENCIES]
+
+  fileToWriteTo = File.open(outputFilename, 'w')
+  fileToWriteTo.puts ERB.new(File.read("#{templatesFolder}/csv.erb"), nil, "-").result
+  fileToWriteTo.close
 end
 
 main()
