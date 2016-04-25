@@ -2,23 +2,66 @@
 require "erb"
 require "Shellwords"
 require "set"
+require 'optparse'
 
-@dependencies = Set.new
-@contentArray = []
-@migrationArray = []
+@DEFAULT_OUTPUT_FILE = "containerExtension.swift"
 
-ARGV[0..-2].each do |filename|
-  f = File.open(filename)
+@options = {
+  :SKIP_MIGRATION  => false,
+  :INPUT_FILE => nil,
+  :OUTPUT_FILE => @DEFAULT_OUTPUT_FILE
+}
 
-  f.each_line {|line|
+@parser = OptionParser.new do |opts|
+  opts.banner = "Usage: swinject_cg [options]"
+
+  opts.on("-iINPUT", "--input=INPUT", "The file containing the definitions, currently only .csv is supported (separated by semicolon).") do |i|
+    @options[:INPUT_FILE] = i
+  end
+
+  opts.on("-oOUTPUT", "--output=OUTPUT", "The file to write to. Default is #{@DEFAULT_OUTPUT_FILE}") do |o|
+    @options[:OUTPUT_FILE] = o
+  end
+
+  opts.on("-s", "--skip_migration", "Does not generate migration.sh files.") do |v|
+    @options[:SKIP_MIGRATION] = true
+  end
+
+  opts.on("-h", "--help", "Prints this help") do
+    puts opts
+    exit
+  end
+end
+
+def main
+  @parser.parse!
+
+  definitionHash = parseInputFile(@options[:INPUT_FILE])
+
+  writeContainerFile(definitionHash, @options[:OUTPUT_FILE])
+
+  unless @options[:SKIP_MIGRATION]
+    writeMigrationFile(definitionHash, @options[:OUTPUT_FILE])
+  end
+end
+
+def parseInputFile(inputFilename)
+  returnHash = {
+    :DEPENDENCIES => Set.new,
+    :DEFINITIONS => []
+  }
+
+  f = File.open(inputFilename)
+
+  f.each_line { |line|
     if line.nil? || line.chomp.empty?
       # ignores empty lines
     elsif line.start_with?("#")
        # detect command
       if(line.start_with?("#ADD_DEPENDENCY "))
-        @dependencies.add(line.split(" ")[1])
+        returnHash[:DEPENDENCIES].add(line.split(" ")[1])
       elsif(line.start_with?("# ADD_DEPENDENCY "))
-        @dependencies.add(line.split(" ")[2])
+        returnHash[:DEPENDENCIES].add(line.split(" ")[2])
       end
     elsif line.start_with?("//")
         # ignores comments
@@ -49,11 +92,12 @@ ARGV[0..-2].each do |filename|
         baseClass = array[0]
 
         targetClass = array[1]
+
         if targetClass.nil?
           targetClass = baseClass
         end
 
-        targetClassName = targetClass.gsub("<", "").gsub(">", "")
+        targetClassName = targetClass.gsub("<", "").gsub(">", "").gsub(".", "")
 
         name = array[2]
 
@@ -93,32 +137,50 @@ ARGV[0..-2].each do |filename|
             :registerFunctionSignature => registerFunctionSignature,
             :registerFunctionCall => registerFunctionCall,
         }
-        @contentArray.push hash
 
-        registerFunctionCallWithoutLastComma = registerFunctionCall.reverse.sub(",", "").reverse
 
-        migrationHash = {
-          :resolveFunctionSignatureRegex => Shellwords.escape(".#{resolveFunctionSignature.split("->").first.strip}"),
-          :resolveFunctionCall => Shellwords.escape("#{resolveFunctionCall})!"),
-          :registerFunctionSignatureRegex => Shellwords.escape(".#{registerFunctionSignature.split("(").first}"),
-          :registerFunctionCall => Shellwords.escape("#{registerFunctionCallWithoutLastComma})")
-        }
-        @migrationArray.push migrationHash
-
-    end
+        returnHash[:DEFINITIONS].push hash
+  end
   }
+
+ returnHash
 end
 
-templatesFolder = File.expand_path(File.dirname(__FILE__))
+def templatesFolder
+  File.expand_path(File.dirname(__FILE__))
+end
 
-fileToWriteTo = File.open(ARGV[-1], 'w')
-fileToWriteTo.puts ERB.new(File.read("#{templatesFolder}/container.erb"), nil, "-").result
-puts "Generated code in #{ARGV[-1]}"
-fileToWriteTo.close
+def writeContainerFile(inputHash, outputFilename)
+  @contentArray = inputHash[:DEFINITIONS]
+  @dependencies = inputHash[:DEPENDENCIES]
 
-migrationFileName = "#{ARGV[-1]}.migration.sh"
+  fileToWriteTo = File.open(outputFilename, 'w')
+  fileToWriteTo.puts ERB.new(File.read("#{templatesFolder()}/container.erb"), nil, "-").result
+  puts "Generated code in #{outputFilename}"
+  fileToWriteTo.close
+end
 
-migrationFileToWriteTo = File.open(migrationFileName, 'w')
-migrationFileToWriteTo.puts ERB.new(File.read("#{templatesFolder}/migration.erb"), nil, "-").result
-puts "Generated migration code in #{migrationFileName}"
-migrationFileToWriteTo.close
+def writeMigrationFile(inputHash, outputFilename)
+  @migrationArray = []
+
+  inputHash[:DEFINITIONS].each do |definition|
+    registerFunctionCallWithoutLastComma = definition[:registerFunctionCall].reverse.sub(",", "").reverse
+
+    migrationHash = {
+      :resolveFunctionSignatureRegex => Shellwords.escape(".#{definition[:resolveFunctionSignature].split("->").first.strip}"),
+      :resolveFunctionCall => Shellwords.escape("#{definition[:resolveFunctionCall]})!"),
+      :registerFunctionSignatureRegex => Shellwords.escape(".#{definition[:registerFunctionSignature].split("(").first}"),
+      :registerFunctionCall => Shellwords.escape("#{registerFunctionCallWithoutLastComma})")
+    }
+
+    @migrationArray.push migrationHash
+  end
+
+  migrationFileName = "#{outputFilename}.migration.sh"
+  migrationFileToWriteTo = File.open(migrationFileName, 'w')
+  migrationFileToWriteTo.puts ERB.new(File.read("#{templatesFolder()}/migration.erb"), nil, "-").result
+  puts "Generated migration code in #{migrationFileName}"
+  migrationFileToWriteTo.close
+end
+
+main()
