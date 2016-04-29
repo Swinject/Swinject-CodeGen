@@ -1,4 +1,4 @@
-<% @dependencies.each do |dependency| -%>
+<% @dependencies.uniq.each do |dependency| -%>
 # ADD_DEPENDENCY <%= dependency %>
 <% end -%>
 <% @contentArray.each do |hash| -%>

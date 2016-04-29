@@ -2,7 +2,7 @@ class CSVParser
 
   def parseCSV(inputFilename)
     returnHash = {
-      :DEPENDENCIES => Set.new,
+      :DEPENDENCIES => [],
       :DEFINITIONS => []
     }
 
@@ -14,9 +14,9 @@ class CSVParser
       elsif line.start_with?("#")
          # detect command
         if(line.start_with?("#ADD_DEPENDENCY "))
-          returnHash[:DEPENDENCIES].add(line.split(" ")[1])
+          returnHash[:DEPENDENCIES].push(line.split(" ")[1])
         elsif(line.start_with?("# ADD_DEPENDENCY "))
-          returnHash[:DEPENDENCIES].add(line.split(" ")[2])
+          returnHash[:DEPENDENCIES].push(line.split(" ")[2])
         end
       elsif line.start_with?("//")
           # ignores comments
