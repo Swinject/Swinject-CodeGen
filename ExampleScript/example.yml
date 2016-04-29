@@ -1,0 +1,48 @@
+---
+:DEPENDENCIES:
+  - ADependency
+:DEFINITIONS:
+- :baseClass: PersonType
+  :targetClass: InjectablePerson
+  :targetClassName: InjectablePerson
+  :name: initializer
+- :baseClass: PersonType
+  :targetClass: InjectablePerson
+  :targetClassName: InjectablePerson
+- :baseClass: PersonType
+  :targetClass: PersonType
+  :targetClassName: PersonType
+- :baseClass: AnotherPersonType
+  :targetClass: AnotherPersonType
+  :targetClassName: AnotherPersonType
+- :baseClass: PersonType
+  :targetClass: InjectablePerson
+  :targetClassName: InjectablePerson
+  :arguments:
+  - :argumentName: argumentName
+    :argumentType: ArgumentType
+- :baseClass: PersonType
+  :targetClass: InjectablePerson
+  :targetClassName: InjectablePerson
+  :arguments:
+  - :argumentName: argumentName
+    :argumentType: ArgumentType
+  - :argumentName: argumenttypewithoutspecificname
+    :argumentType: ArgumentTypeWithoutSpecificName
+  - :argumentName: title
+    :argumentType: String
+  - :argumentName: string
+    :argumentType: String
+- :baseClass: PersonType
+  :targetClass: InjectablePerson
+  :targetClassName: InjectablePerson
+  :name: initializer
+  :arguments:
+  - :argumentName: argumentName
+    :argumentType: ArgumentType
+  - :argumentName: argumenttypewithoutspecificname
+    :argumentType: ArgumentTypeWithoutSpecificName
+  - :argumentName: title
+    :argumentType: String
+  - :argumentName: string
+    :argumentType: String

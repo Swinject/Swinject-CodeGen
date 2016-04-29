@@ -23,7 +23,7 @@ pod 'Swinject-CodeGeneration',  :git => 'https://github.com/Swinject/Swinject-Co
 to your podfile.
 
 ## Integration
-1. Define your dependencies in a .csv file (see below and example file)
+1. Define your dependencies in a .csv or .yml file (see below and example file)
 2. Add a call to generate the code as build script phase:
 
 ```Shell
@@ -63,8 +63,14 @@ the `argument: "Spirit"` part is not strictly typed when calling it.
 We propose a solution to both these problems by using CodeGeneration
 
 ## Input Format
-We have implemented a first version, that uses a .csv file to define the generated calls, though we are considering switching to .yml for better readability.
-It would also be an option to allow both formats.
+Input can be given as .csv or .yml
+
+The call
+```
+./swinject_cg -i example.csv -c
+```
+
+can be used to convert example.csv into example.csv.yml (also works for .yml).
 
 ### CSV
 
@@ -95,18 +101,56 @@ Empty lines are ignored and can be used for grouping.
 
 ### YML
 
-Our yet-to-specificy yml format could follow the following structure:
-
+Example for a .yml definition:
 ```yml
-dependencies:
- - KeychainAccess
-definitions:
- - sourceClass: SourceClass
-   targetClass: TargetClass
-   identifier: Identifier
-   arguments:
-      - argumentName1:ArgumentType
-      - ArgumentTypeWithoutSpecificName
+---
+:DEPENDENCIES:
+  - ADependency
+:DEFINITIONS:
+- :baseClass: PersonType
+  :targetClass: InjectablePerson
+  :targetClassName: InjectablePerson
+  :name: initializer
+- :baseClass: PersonType
+  :targetClass: InjectablePerson
+  :targetClassName: InjectablePerson
+- :baseClass: PersonType
+  :targetClass: PersonType
+  :targetClassName: PersonType
+- :baseClass: AnotherPersonType
+  :targetClass: AnotherPersonType
+  :targetClassName: AnotherPersonType
+- :baseClass: PersonType
+  :targetClass: InjectablePerson
+  :targetClassName: InjectablePerson
+  :arguments:
+  - :argumentName: argumentName
+    :argumentType: ArgumentType
+- :baseClass: PersonType
+  :targetClass: InjectablePerson
+  :targetClassName: InjectablePerson
+  :arguments:
+  - :argumentName: argumentName
+    :argumentType: ArgumentType
+  - :argumentName: argumenttypewithoutspecificname
+    :argumentType: ArgumentTypeWithoutSpecificName
+  - :argumentName: title
+    :argumentType: String
+  - :argumentName: string
+    :argumentType: String
+- :baseClass: PersonType
+  :targetClass: InjectablePerson
+  :targetClassName: InjectablePerson
+  :name: initializer
+  :arguments:
+  - :argumentName: argumentName
+    :argumentType: ArgumentType
+  - :argumentName: argumenttypewithoutspecificname
+    :argumentType: ArgumentTypeWithoutSpecificName
+  - :argumentName: title
+    :argumentType: String
+  - :argumentName: string
+    :argumentType: String
 ```
 
 ## Generation Examples

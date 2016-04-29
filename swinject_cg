@@ -1,13 +1,16 @@
 #!/usr/bin/env ruby
 require "erb"
 require "Shellwords"
-require "set"
-require 'optparse'
+require "optparse"
+require_relative "./CSVParser"
+require_relative "./YMLParser"
+require_relative "./YMLSerializer"
 
 @DEFAULT_OUTPUT_FILE = "containerExtension.swift"
 
 @options = {
   :SKIP_MIGRATION  => false,
+  :CONVERT  => false,
   :INPUT_FILE => nil,
   :OUTPUT_FILE => @DEFAULT_OUTPUT_FILE
 }
@@ -15,7 +18,7 @@ require 'optparse'
 @parser = OptionParser.new do |opts|
   opts.banner = "Usage: swinject_cg [options]"
 
-  opts.on("-iINPUT", "--input=INPUT", "The file containing the definitions, currently only .csv is supported (separated by semicolon).") do |i|
+  opts.on("-iINPUT", "--input=INPUT", "The file containing the definitions, currently .yml and .csv are supported (separated by semicolon).") do |i|
     @options[:INPUT_FILE] = i
   end
 
@@ -27,6 +30,10 @@ require 'optparse'
     @options[:SKIP_MIGRATION] = true
   end
 
+  opts.on("-c", "--convert", "Convert the input file into the other format") do |v|
+    @options[:CONVERT] = true
+  end
+
   opts.on("-h", "--help", "Prints this help") do
     puts opts
     exit
@@ -36,7 +43,25 @@ end
 def main
   @parser.parse!
 
-  definitionHash = parseInputFile(@options[:INPUT_FILE])
+  inputFilename = @options[:INPUT_FILE]
+
+  definitionHash = parseInputFile(inputFilename)
+
+  if @options[:CONVERT]
+    if inputFilename.end_with?("csv")
+      outputFilename = "#{inputFilename}.yml"
+      YMLSerializer.new.serializeHashToYML(definitionHash, outputFilename)
+      puts "Converted #{inputFilename} to #{outputFilename}"
+    elsif inputFilename.end_with?("yml")
+      outputFilename = "#{inputFilename}.csv"
+      serializeHashToCSV(definitionHash, outputFilename)
+      puts "Converted #{inputFilename} to #{outputFilename}"
+    end
+    exit 0
+  end
+
+  # prepare definitions
+  prepareDefinitions(definitionHash)
 
   writeContainerFile(definitionHash, @options[:OUTPUT_FILE])
 
@@ -46,104 +71,14 @@ def main
 end
 
 def parseInputFile(inputFilename)
-  returnHash = {
-    :DEPENDENCIES => Set.new,
-    :DEFINITIONS => []
-  }
-
-  f = File.open(inputFilename)
-
-  f.each_line { |line|
-    if line.nil? || line.chomp.empty?
-      # ignores empty lines
-    elsif line.start_with?("#")
-       # detect command
-      if(line.start_with?("#ADD_DEPENDENCY "))
-        returnHash[:DEPENDENCIES].add(line.split(" ")[1])
-      elsif(line.start_with?("# ADD_DEPENDENCY "))
-        returnHash[:DEPENDENCIES].add(line.split(" ")[2])
-      end
-    elsif line.start_with?("//")
-        # ignores comments
-    else
-        # UIViewController, TelecastViewController, name, Telecast2, Telecast3
-        array = line.split(";").map { |a| a.strip }
-        arguments = array[3..-1]
-        argumentHashes = nil
-        unless arguments.nil?
-            arguments.reject { |a| a.empty? }
-            argumentHashes = arguments.map do |a|
-                hash = nil
-                if(a.include?(":"))
-                    hash = {
-                        :argumentName => a.split(":").first.strip,
-                        :argumentType => a.split(":").last.strip
-                    }
-                else
-                    hash = {
-                        :argumentName => a.downcase,
-                        :argumentType => a
-                    }
-                end
-                hash
-            end
-        end
-
-        baseClass = array[0]
-
-        targetClass = array[1]
-
-        if targetClass.nil?
-          targetClass = baseClass
-        end
-
-        targetClassName = targetClass.gsub("<", "").gsub(">", "").gsub(".", "")
-
-        name = array[2]
-
-        hasNoName = (name.nil? || name.empty?)
-
-        registerFunctionSignature = "register"
-        registerFunctionSignature = registerFunctionSignature + targetClassName
-        registerFunctionSignature = registerFunctionSignature + "_#{name}" unless hasNoName
-        registerFunctionSignature = registerFunctionSignature + "(registerClosure: (resolver: ResolverType"
-        registerFunctionSignature = registerFunctionSignature + ", " unless (argumentHashes.nil? || argumentHashes.empty?)
-        registerFunctionSignature = registerFunctionSignature + argumentHashes.map {|a| "#{a[:argumentName]}: #{a[:argumentType]}"}.join(", ") unless (argumentHashes.nil? || argumentHashes.empty?)
-        registerFunctionSignature = registerFunctionSignature + ") -> (#{targetClass})) -> ServiceEntry<#{baseClass}>"
-
-        registerFunctionCall = ".register("
-        registerFunctionCall = registerFunctionCall + "#{baseClass}.self,"
-        registerFunctionCall = registerFunctionCall + " name: \"#{name}\"," unless hasNoName
-
-        resolveFunctionSignature = "resolve"
-        resolveFunctionSignature = resolveFunctionSignature + targetClassName
-        resolveFunctionSignature = resolveFunctionSignature + "_#{name}" unless hasNoName
-        resolveFunctionSignature = resolveFunctionSignature + "("
-        resolveFunctionSignature = resolveFunctionSignature + argumentHashes.map {|a| "#{a[:argumentName]}: #{a[:argumentType]}"}.join(", ") unless (argumentHashes.nil? || argumentHashes.empty?)
-        resolveFunctionSignature = resolveFunctionSignature + ") -> #{targetClass}"
-
-        resolveFunctionCall = ".resolve("
-        resolveFunctionCall = resolveFunctionCall + "#{baseClass}.self"
-        resolveFunctionCall = resolveFunctionCall + ", name: \"#{name}\"" unless hasNoName
-
-        hash = {
-            :baseClass => baseClass,
-            :targetClass => targetClass,
-            :targetClassName => targetClassName,
-            :name => name,
-            :arguments => argumentHashes,
-            :resolveFunctionSignature => resolveFunctionSignature,
-            :resolveFunctionCall => resolveFunctionCall,
-            :registerFunctionSignature => registerFunctionSignature,
-            :registerFunctionCall => registerFunctionCall,
-        }
-
-
-        returnHash[:DEFINITIONS].push hash
+  if inputFilename.end_with?("csv")
+    return CSVParser.new.parseCSV(inputFilename)
+  elsif inputFilename.end_with?("yml")
+    return YMLParser.new.parseYML(inputFilename)
+  else
+    puts "unknown input format for file #{inputFilename}"
+    exit
   end
-  }
-
- returnHash
 end
 
 def templatesFolder
@@ -181,6 +116,54 @@ def writeMigrationFile(inputHash, outputFilename)
   migrationFileToWriteTo.puts ERB.new(File.read("#{templatesFolder()}/migration.erb"), nil, "-").result
   puts "Generated migration code in #{migrationFileName}"
   migrationFileToWriteTo.close
+end
+
+def prepareDefinitions(hash)
+  definitions = hash[:DEFINITIONS]
+
+  definitions.each do | definition |
+    name = definition[:name]
+
+    hasNoName = (name.nil? || name.empty?)
+    argumentHashes = definition[:arguments]
+
+    registerFunctionSignature = "register"
+    registerFunctionSignature = registerFunctionSignature + definition[:targetClassName]
+    registerFunctionSignature = registerFunctionSignature + "_#{name}" unless hasNoName
+    registerFunctionSignature = registerFunctionSignature + "(registerClosure: (resolver: ResolverType"
+    registerFunctionSignature = registerFunctionSignature + ", " unless (argumentHashes.nil? || argumentHashes.empty?)
+    registerFunctionSignature = registerFunctionSignature + argumentHashes.map {|a| "#{a[:argumentName]}: #{a[:argumentType]}"}.join(", ") unless (argumentHashes.nil? || argumentHashes.empty?)
+    registerFunctionSignature = registerFunctionSignature + ") -> (#{definition[:targetClass]})) -> ServiceEntry<#{definition[:baseClass]}>"
+
+    registerFunctionCall = ".register("
+    registerFunctionCall = registerFunctionCall + "#{definition[:baseClass]}.self,"
+    registerFunctionCall = registerFunctionCall + " name: \"#{name}\"," unless hasNoName
+
+    resolveFunctionSignature = "resolve"
+    resolveFunctionSignature = resolveFunctionSignature + definition[:targetClassName]
+    resolveFunctionSignature = resolveFunctionSignature + "_#{name}" unless hasNoName
+    resolveFunctionSignature = resolveFunctionSignature + "("
+    resolveFunctionSignature = resolveFunctionSignature + argumentHashes.map {|a| "#{a[:argumentName]}: #{a[:argumentType]}"}.join(", ") unless (argumentHashes.nil? || argumentHashes.empty?)
+    resolveFunctionSignature = resolveFunctionSignature + ") -> #{definition[:targetClass]}"
+
+    resolveFunctionCall = ".resolve("
+    resolveFunctionCall = resolveFunctionCall + "#{definition[:baseClass]}.self"
+    resolveFunctionCall = resolveFunctionCall + ", name: \"#{name}\"" unless hasNoName
+
+    definition[:resolveFunctionSignature] = resolveFunctionSignature
+    definition[:resolveFunctionCall] = resolveFunctionCall
+    definition[:registerFunctionSignature] = registerFunctionSignature
+    definition[:registerFunctionCall] = registerFunctionCall
+  end
+end
+
+def serializeHashToCSV(hash, outputFilename)
+  @contentArray = hash[:DEFINITIONS]
+  @dependencies = hash[:DEPENDENCIES]
+
+  fileToWriteTo = File.open(outputFilename, 'w')
+  fileToWriteTo.puts ERB.new(File.read("#{templatesFolder}/csv.erb"), nil, "-").result
+  fileToWriteTo.close
 end
 
 main()
