@@ -18,7 +18,7 @@ require_relative "./YMLSerializer"
 @parser = OptionParser.new do |opts|
   opts.banner = "Usage: swinject_cg [options]"
 
-  opts.on("-iINPUT", "--input=INPUT", "The file containing the definitions, currently only .csv is supported (separated by semicolon).") do |i|
+  opts.on("-iINPUT", "--input=INPUT", "The file containing the definitions, currently .yml and .csv are supported (separated by semicolon).") do |i|
     @options[:INPUT_FILE] = i
   end
 
@@ -49,10 +49,15 @@ def main
 
   if @options[:CONVERT]
     if inputFilename.end_with?("csv")
-      YMLSerializer.new.serializeHashToYML(definitionHash, "#{inputFilename}.yml")
+      outputFilename = "#{inputFilename}.yml"
+      YMLSerializer.new.serializeHashToYML(definitionHash, outputFilename)
+      puts "Converted #{inputFilename} to #{outputFilename}"
     elsif inputFilename.end_with?("yml")
-      serializeHashToCSV(definitionHash, "#{inputFilename}.csv")
+      outputFilename = "#{inputFilename}.csv"
+      serializeHashToCSV(definitionHash, outputFilename)
+      puts "Converted #{inputFilename} to #{outputFilename}"
     end
+    exit 0
   end
 
   # prepare definitions
