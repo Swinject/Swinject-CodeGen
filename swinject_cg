@@ -2,9 +2,9 @@
 require "erb"
 require "Shellwords"
 require "optparse"
-require "./CSVParser"
-require "./YMLParser"
-require "./YMLSerializer"
+require_relative "./CSVParser"
+require_relative "./YMLParser"
+require_relative "./YMLSerializer"
 
 @DEFAULT_OUTPUT_FILE = "containerExtension.swift"
 
