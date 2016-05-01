@@ -89,10 +89,10 @@ def writeContainerFile(inputHash, outputFilename)
   @contentArray = inputHash[:DEFINITIONS]
   @dependencies = inputHash[:DEPENDENCIES]
 
-  fileToWriteTo = File.open(outputFilename, 'w')
-  fileToWriteTo.puts ERB.new(File.read("#{templatesFolder()}/container.erb"), nil, "-").result
-  puts "Generated code in #{outputFilename}"
-  fileToWriteTo.close
+  File.open(outputFilename, 'w') do |fileToWriteTo|
+    fileToWriteTo.puts ERB.new(File.read("#{templatesFolder()}/container.erb"), nil, "-").result
+    puts "Generated code in #{outputFilename}"
+  end
 end
 
 def writeMigrationFile(inputHash, outputFilename)
@@ -112,10 +112,10 @@ def writeMigrationFile(inputHash, outputFilename)
   end
 
   migrationFileName = "#{outputFilename}.migration.sh"
-  migrationFileToWriteTo = File.open(migrationFileName, 'w')
-  migrationFileToWriteTo.puts ERB.new(File.read("#{templatesFolder()}/migration.erb"), nil, "-").result
-  puts "Generated migration code in #{migrationFileName}"
-  migrationFileToWriteTo.close
+  File.open(migrationFileName, 'w') do |migrationFileToWriteTo|
+    migrationFileToWriteTo.puts ERB.new(File.read("#{templatesFolder()}/migration.erb"), nil, "-").result
+    puts "Generated migration code in #{migrationFileName}"
+  end
 end
 
 def prepareDefinitions(hash)
@@ -161,9 +161,9 @@ def serializeHashToCSV(hash, outputFilename)
   @contentArray = hash[:DEFINITIONS]
   @dependencies = hash[:DEPENDENCIES]
 
-  fileToWriteTo = File.open(outputFilename, 'w')
-  fileToWriteTo.puts ERB.new(File.read("#{templatesFolder}/csv.erb"), nil, "-").result
-  fileToWriteTo.close
+  File.open(outputFilename, 'w') do |fileToWriteTo|
+    fileToWriteTo.puts ERB.new(File.read("#{templatesFolder}/csv.erb"), nil, "-").result
+  end
 end
 
 main()
