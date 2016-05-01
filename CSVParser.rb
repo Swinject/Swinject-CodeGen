@@ -8,7 +8,7 @@ class CSVParser
 
     f = File.open(inputFilename)
 
-    f.each_line { |line|
+    f.each_line do |line|
       if line.nil? || line.chomp.empty?
         # ignores empty lines
       elsif line.start_with?("#")
@@ -65,7 +65,7 @@ class CSVParser
 
           returnHash[:DEFINITIONS].push hash
         end
-    }
+    end
     return returnHash
   end
 
