@@ -44,15 +44,8 @@ class CSVParser
         end
 
         baseClass = array[0]
-
-        targetClass = array[1]
-
-        if targetClass.nil?
-          targetClass = baseClass
-        end
-
+        targetClass = array[1] || baseClass
         targetClassName = targetClass.gsub("<", "").gsub(">", "").gsub(".", "")
-
         name = array[2]
 
         hash = {
