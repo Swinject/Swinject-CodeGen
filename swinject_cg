@@ -128,27 +128,27 @@ def prepareDefinitions(hash)
     argumentHashes = definition[:arguments]
 
     registerFunctionSignature = "register"
-    registerFunctionSignature = registerFunctionSignature + definition[:targetClassName]
-    registerFunctionSignature = registerFunctionSignature + "_#{name}" unless hasNoName
-    registerFunctionSignature = registerFunctionSignature + "(registerClosure: (resolver: ResolverType"
-    registerFunctionSignature = registerFunctionSignature + ", " unless (argumentHashes.nil? || argumentHashes.empty?)
-    registerFunctionSignature = registerFunctionSignature + argumentHashes.map {|a| "#{a[:argumentName]}: #{a[:argumentType]}"}.join(", ") unless (argumentHashes.nil? || argumentHashes.empty?)
-    registerFunctionSignature = registerFunctionSignature + ") -> (#{definition[:targetClass]})) -> ServiceEntry<#{definition[:baseClass]}>"
+    registerFunctionSignature << definition[:targetClassName]
+    registerFunctionSignature << "_#{name}" unless hasNoName
+    registerFunctionSignature << "(registerClosure: (resolver: ResolverType"
+    registerFunctionSignature << ", " unless (argumentHashes.nil? || argumentHashes.empty?)
+    registerFunctionSignature << argumentHashes.map {|a| "#{a[:argumentName]}: #{a[:argumentType]}"}.join(", ") unless (argumentHashes.nil? || argumentHashes.empty?)
+    registerFunctionSignature << ") -> (#{definition[:targetClass]})) -> ServiceEntry<#{definition[:baseClass]}>"
 
     registerFunctionCall = ".register("
-    registerFunctionCall = registerFunctionCall + "#{definition[:baseClass]}.self,"
-    registerFunctionCall = registerFunctionCall + " name: \"#{name}\"," unless hasNoName
+    registerFunctionCall << "#{definition[:baseClass]}.self,"
+    registerFunctionCall << " name: \"#{name}\"," unless hasNoName
 
     resolveFunctionSignature = "resolve"
-    resolveFunctionSignature = resolveFunctionSignature + definition[:targetClassName]
-    resolveFunctionSignature = resolveFunctionSignature + "_#{name}" unless hasNoName
-    resolveFunctionSignature = resolveFunctionSignature + "("
-    resolveFunctionSignature = resolveFunctionSignature + argumentHashes.map {|a| "#{a[:argumentName]}: #{a[:argumentType]}"}.join(", ") unless (argumentHashes.nil? || argumentHashes.empty?)
-    resolveFunctionSignature = resolveFunctionSignature + ") -> #{definition[:targetClass]}"
+    resolveFunctionSignature << definition[:targetClassName]
+    resolveFunctionSignature << "_#{name}" unless hasNoName
+    resolveFunctionSignature << "("
+    resolveFunctionSignature << argumentHashes.map {|a| "#{a[:argumentName]}: #{a[:argumentType]}"}.join(", ") unless (argumentHashes.nil? || argumentHashes.empty?)
+    resolveFunctionSignature << ") -> #{definition[:targetClass]}"
 
     resolveFunctionCall = ".resolve("
-    resolveFunctionCall = resolveFunctionCall + "#{definition[:baseClass]}.self"
-    resolveFunctionCall = resolveFunctionCall + ", name: \"#{name}\"" unless hasNoName
+    resolveFunctionCall << "#{definition[:baseClass]}.self"
+    resolveFunctionCall << ", name: \"#{name}\"" unless hasNoName
 
     definition[:resolveFunctionSignature] = resolveFunctionSignature
     definition[:resolveFunctionCall] = resolveFunctionCall
