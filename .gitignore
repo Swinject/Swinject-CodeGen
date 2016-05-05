@@ -12,3 +12,11 @@ bin/bundler
 # Generated Code, does not need to checked in
 ExampleScript/containerExtension.swift.migration.sh
 ExampleScript/containerExtension.swift
+ExampleScript/containerExtension2.swift
+ExampleScript/containerExtension2.swift.migration.sh
+ExampleScript/containerExtension3.swift
+ExampleScript/containerExtension3.swift.migration.sh
+ExampleScript/containerExtension4.swift
+ExampleScript/containerExtension4.swift.migration.sh
+ExampleScript/example.csv.yml
+ExampleScript/example.yml.csv
