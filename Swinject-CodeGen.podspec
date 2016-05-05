@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "Swinject-CodeGen"
-  s.version          = "0.2.0"
+  s.version          = "0.3.0"
   s.summary          = "Generates extensions on the container class, to make use of swinject less error prone and more typesafe."
 
   s.description      = <<-DESC
