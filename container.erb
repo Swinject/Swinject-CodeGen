@@ -9,7 +9,7 @@ import  <%= dependency %>
 extension Resolvable {
 <% @contentArray.each do |hash| %>
     func <%= hash[:resolveFunctionSignature] %> {
-        return self<%= hash[:resolveFunctionCall] %><%= ", argument: #{hash[:arguments][0][:argumentName]}" if !hash[:arguments].nil? && hash[:arguments].count == 1 -%><%= ", arguments: (#{hash[:arguments].map {|a| a[:argumentName]}.join(', ')})" if !hash[:arguments].nil? && hash[:arguments].count > 1 -%>)!<%= " as! #{hash[:targetClass]}" if hash[:baseClass] != hash[:targetClass]%>
+        return self<%= hash[:resolveFunctionCall] %><%= ", argument: #{hash[:arguments][0][:argumentName]}" if !hash[:arguments].nil? && hash[:arguments].count == 1 -%><%= ", arguments: (#{hash[:arguments].map {|a| a[:argumentName]}.join(', ')})" if !hash[:arguments].nil? && hash[:arguments].count > 1 -%>)<%=hash[:baseClass] != hash[:targetClass] ? " as! #{hash[:targetClass]}" : "!"%>
     }
 <% end -%>
 
