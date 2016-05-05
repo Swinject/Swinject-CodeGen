@@ -17,7 +17,7 @@ We aim to support carthage in the near future
 Add
 
 ```
-pod 'Swinject-CodeGeneration',  :git => 'https://github.com/Swinject/Swinject-CodeGeneration.git'
+pod 'Swinject-CodeGen',  :git => 'https://github.com/Swinject/Swinject-CodeGeneration.git'
 ```
 
 to your podfile.
@@ -27,7 +27,7 @@ to your podfile.
 2. Add a call to generate the code as build script phase:
 
 ```Shell
-$PODS_ROOT/Swinject-CodeGeneration/swinject_cg -i baseInput.csv -o extensions/baseContainerExtension.swift
+$PODS_ROOT/Swinject-CodeGen/swinject_codegen -i baseInput.csv -o extensions/baseContainerExtension.swift
 ```
 
 3. Add the generated file (here: `extensions/baseContainerExtension.swift`) to xcode
@@ -67,7 +67,7 @@ Input can be given as .csv or .yml
 
 The call
 ```
-./swinject_cg -i example.csv -c
+./swinject_codegen -i example.csv -c
 ```
 
 can be used to convert example.csv into example.csv.yml (also works for .yml).
@@ -329,9 +329,9 @@ We can provide more examples if desired.
 The Integration is currently done by calling the following code in a very early (i.e. before compilation) build phase:
 ```SH
 cd ${SRCROOT}/CodeGeneration/
-swinject_cg -i baseInput.csv -o extensions/baseContainerExtension.swift
-swinject_cg -i iosInput.csv -o extensions/iosContainerExtension.swift
-swinject_cg -i tvosInput.csv -o extensions/tvosContainerExtension.swift
+swinject_codegen -i baseInput.csv -o extensions/baseContainerExtension.swift
+swinject_codegen -i iosInput.csv -o extensions/iosContainerExtension.swift
+swinject_codegen -i tvosInput.csv -o extensions/tvosContainerExtension.swift
 ```
 
 The resulting extension files are added to xcode and given appropriate target settings.

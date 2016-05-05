@@ -16,7 +16,7 @@ require_relative "./YMLSerializer"
 }
 
 @parser = OptionParser.new do |opts|
-  opts.banner = "Usage: swinject_cg [options]"
+  opts.banner = "Usage: #{__FILE__} [options]"
 
   opts.on("-iINPUT", "--input=INPUT", "The file containing the definitions, currently .yml and .csv are supported (separated by semicolon).") do |i|
     @options[:INPUT_FILE] = i

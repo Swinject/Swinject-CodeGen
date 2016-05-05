@@ -1,5 +1,5 @@
 Pod::Spec.new do |s|
-  s.name             = "Swinject-CodeGeneration"
+  s.name             = "Swinject-CodeGen"
   s.version          = "0.2.0"
   s.summary          = "Generates extensions on the container class, to make use of swinject less error prone and more typesafe."
 
@@ -17,7 +17,7 @@ Pod::Spec.new do |s|
 
   s.ios.deployment_target = '8.0'
   s.tvos.deployment_target = '9.0'
-  s.source_files   = '*.erb', '*.rb', 'swinject_cg'
+  s.source_files   = '*.erb', '*.rb', 'swinject_codegen'
 
   s.dependency "Swinject"
 
