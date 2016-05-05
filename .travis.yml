@@ -1,6 +1,7 @@
 language: objective-c
 osx_image: xcode7.3
 script:
+  - ruby test.rb
 notifications:
   email:
     on_success: never
