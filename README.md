@@ -337,7 +337,7 @@ swinject_codegen -i tvosInput.csv -o extensions/tvosContainerExtension.swift
 The resulting extension files are added to xcode and given appropriate target settings.
 
 ## Migration
-The script also generates migration.sh files, which use sed to go through the code and replace simple cases (i.e. no arguments) of resolve and register.
+The script also generates migration.sh files (when using the -m switch), which use sed to go through the code and replace simple cases (i.e. no arguments) of resolve and register.
 No automatic migration is available for cases with arguments, yet.
 Simply call the .sh file from the root of the project and compare the results in a git-GUI.
 

@@ -9,7 +9,7 @@ require_relative "./YMLSerializer"
 @DEFAULT_OUTPUT_FILE = "containerExtension.swift"
 
 @options = {
-  :SKIP_MIGRATION  => false,
+  :MIGRATION  => false,
   :CONVERT  => false,
   :INPUT_FILE => nil,
   :OUTPUT_FILE => @DEFAULT_OUTPUT_FILE
@@ -26,8 +26,8 @@ require_relative "./YMLSerializer"
     @options[:OUTPUT_FILE] = o
   end
 
-  opts.on("-s", "--skip_migration", "Does not generate migration.sh files.") do |v|
-    @options[:SKIP_MIGRATION] = true
+  opts.on("-m", "--migration", "Generate migration.sh files to automatically replace existing calls in swift code.") do |v|
+    @options[:MIGRATION] = true
   end
 
   opts.on("-c", "--convert", "Convert the input file into the other format") do |v|
@@ -65,7 +65,7 @@ def main
 
   writeContainerFile(definitionHash, @options[:OUTPUT_FILE])
 
-  unless @options[:SKIP_MIGRATION]
+  if @options[:MIGRATION]
     writeMigrationFile(definitionHash, @options[:OUTPUT_FILE])
   end
 end
