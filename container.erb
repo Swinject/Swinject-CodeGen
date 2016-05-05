@@ -12,10 +12,12 @@ extension Resolvable {
         return self<%= hash[:resolveFunctionCall] %><%= ", argument: #{hash[:arguments][0][:argumentName]}" if !hash[:arguments].nil? && hash[:arguments].count == 1 -%><%= ", arguments: (#{hash[:arguments].map {|a| a[:argumentName]}.join(', ')})" if !hash[:arguments].nil? && hash[:arguments].count > 1 -%>)<%=hash[:baseClass] != hash[:targetClass] ? " as! #{hash[:targetClass]}" : "!"%>
     }
 <% end -%>
+}
 
+extension Container {
 <% @contentArray.each do |hash| %>
     func <%= hash[:registerFunctionSignature] %> {
-        return (self as! Container)<%= hash[:registerFunctionCall] %> factory: registerClosure)
+        return self<%= hash[:registerFunctionCall] %> factory: registerClosure)
     }
 <% end -%>
 }
