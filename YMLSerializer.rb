@@ -3,7 +3,15 @@ require 'yaml'
 class YMLSerializer
 
   def serializeHashToYML(hash, outputFilename)
-    File.open(outputFilename, 'w') { |file| file.write(hash.to_yaml) }
+    code = hash.to_yaml
+
+    if outputFilename.nil?
+      puts code
+    else
+      File.open(outputFilename, 'w') do |fileToWriteTo|
+        fileToWriteTo.puts code
+      end
+    end
   end
 
 end

@@ -6,13 +6,11 @@ require_relative "./CSVParser"
 require_relative "./YMLParser"
 require_relative "./YMLSerializer"
 
-@DEFAULT_OUTPUT_FILE = "containerExtension.swift"
-
 @options = {
   :MIGRATION  => false,
   :CONVERT  => false,
   :INPUT_FILE => nil,
-  :OUTPUT_FILE => @DEFAULT_OUTPUT_FILE
+  :OUTPUT_FILE => nil
 }
 
 @parser = OptionParser.new do |opts|
@@ -22,7 +20,7 @@ require_relative "./YMLSerializer"
     @options[:INPUT_FILE] = i
   end
 
-  opts.on("-oOUTPUT", "--output=OUTPUT", "The file to write to. Default is #{@DEFAULT_OUTPUT_FILE}") do |o|
+  opts.on("-oOUTPUT", "--output=OUTPUT", "The file to write to. Use STDOUT if not given") do |o|
     @options[:OUTPUT_FILE] = o
   end
 
@@ -48,25 +46,31 @@ def main
   definitionHash = parseInputFile(inputFilename)
 
   if @options[:CONVERT]
+
+    outputFilename = @options[:OUTPUT_FILE]
+
     if inputFilename.end_with?("csv")
-      outputFilename = "#{inputFilename}.yml"
       YMLSerializer.new.serializeHashToYML(definitionHash, outputFilename)
-      puts "Converted #{inputFilename} to #{outputFilename}"
     elsif inputFilename.end_with?("yml")
-      outputFilename = "#{inputFilename}.csv"
       serializeHashToCSV(definitionHash, outputFilename)
+    end
+
+    unless outputFilename.nil?
       puts "Converted #{inputFilename} to #{outputFilename}"
     end
+
     exit 0
   end
 
   # prepare definitions
   prepareDefinitions(definitionHash)
 
-  writeContainerFile(definitionHash, @options[:OUTPUT_FILE])
-
   if @options[:MIGRATION]
     writeMigrationFile(definitionHash, @options[:OUTPUT_FILE])
+  end
+
+  unless @options[:CONVERT] || @options[:MIGRATION]
+    writeContainerFile(definitionHash, @options[:OUTPUT_FILE])
   end
 end
 
@@ -89,10 +93,17 @@ def writeContainerFile(inputHash, outputFilename)
   @contentArray = inputHash[:DEFINITIONS]
   @dependencies = inputHash[:DEPENDENCIES]
 
-  File.open(outputFilename, 'w') do |fileToWriteTo|
-    fileToWriteTo.puts ERB.new(File.read("#{templatesFolder()}/container.erb"), nil, "-").result
-    puts "Generated code in #{outputFilename}"
+  code = ERB.new(File.read("#{templatesFolder()}/container.erb"), nil, "-").result
+
+  if outputFilename.nil?
+    puts code
+  else
+    File.open(outputFilename, 'w') do |fileToWriteTo|
+      fileToWriteTo.puts code
+      puts "Generated code in #{outputFilename}"
+    end
   end
+
 end
 
 def writeMigrationFile(inputHash, outputFilename)
@@ -111,11 +122,18 @@ def writeMigrationFile(inputHash, outputFilename)
     @migrationArray.push migrationHash
   end
 
-  migrationFileName = "#{outputFilename}.migration.sh"
-  File.open(migrationFileName, 'w') do |migrationFileToWriteTo|
-    migrationFileToWriteTo.puts ERB.new(File.read("#{templatesFolder()}/migration.erb"), nil, "-").result
-    puts "Generated migration code in #{migrationFileName}"
+  migrationCode = ERB.new(File.read("#{templatesFolder()}/migration.erb"), nil, "-").result
+
+  if outputFilename.nil?
+    puts migrationCode
+  else
+    migrationFileName = "#{outputFilename}.migration.sh"
+    File.open(migrationFileName, 'w') do |fileToWriteTo|
+      fileToWriteTo.puts migrationCode
+      puts "Generated migration code in #{migrationFileName}"
+    end
   end
+
 end
 
 def prepareDefinitions(hash)
@@ -161,9 +179,16 @@ def serializeHashToCSV(hash, outputFilename)
   @contentArray = hash[:DEFINITIONS]
   @dependencies = hash[:DEPENDENCIES]
 
-  File.open(outputFilename, 'w') do |fileToWriteTo|
-    fileToWriteTo.puts ERB.new(File.read("#{templatesFolder}/csv.erb"), nil, "-").result
+  code = ERB.new(File.read("#{templatesFolder}/csv.erb"), nil, "-").result
+
+  if outputFilename.nil?
+    puts code
+  else
+    File.open(outputFilename, 'w') do |fileToWriteTo|
+      fileToWriteTo.puts code
+    end
   end
+
 end
 
 if __FILE__ == $0
