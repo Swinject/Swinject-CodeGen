@@ -7,6 +7,7 @@ install:
   - pod setup
 script:
   - ruby test.rb
+  - pod install --project-directory=ExampleProject/CodeGenerationExample
   - scan --scheme CodeGenerationExample --workspace ExampleProject/CodeGenerationExample/CodeGenerationExample.xcworkspace
 rvm:
   - 2.0
