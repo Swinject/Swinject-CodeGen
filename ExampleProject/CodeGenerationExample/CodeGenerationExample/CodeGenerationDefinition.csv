@@ -1,0 +1,13 @@
+AnimalType; Cat
+PersonType
+AnimalType; AnimalType ;dog
+PersonType; PersonType ;doggy
+AnimalType; AnimalType ;cb
+PersonType; PersonType ;initializer
+PersonType; PersonType ;property1
+PersonType; PersonType ;property2
+PersonType; PersonType ;method1
+PersonType; PersonType ;method2
+AnimalType; Horse ; ; name:String
+AnimalType; Horse ; ; name:String ; running:Bool
+AnimalType; Turtle
