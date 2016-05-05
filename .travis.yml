@@ -1,7 +1,13 @@
 language: objective-c
 osx_image: xcode7.3
+before_install:
+  - gem install bundler
+  - bundle install
 script:
   - ruby test.rb
+rvm:
+  - 2.0
+  - 2.3.1
 notifications:
   email:
     on_success: never
