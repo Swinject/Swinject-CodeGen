@@ -22,8 +22,19 @@
 		8431D8A11CDBAAFE00BB0679 /* Turle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8431D8A01CDBAAFE00BB0679 /* Turle.swift */; };
 		8431D8A31CDBAB4800BB0679 /* CodeGenerationDefinition.csv in Resources */ = {isa = PBXBuildFile; fileRef = 8431D8A21CDBAB4800BB0679 /* CodeGenerationDefinition.csv */; };
 		8431D8A61CDBAC7100BB0679 /* ExampleContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8431D8A51CDBAC7100BB0679 /* ExampleContainer.swift */; };
+		8431D8AE1CDBB47E00BB0679 /* CodeGenerationExampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8431D8AD1CDBB47E00BB0679 /* CodeGenerationExampleTests.swift */; };
 		EB11BF958F6A888FEC7598D2 /* Pods_CodeGenerationExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1835EE378081E9C8CAC576A5 /* Pods_CodeGenerationExample.framework */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		8431D8B01CDBB47E00BB0679 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 840B7FD51CDBA373008CA97E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 840B7FDC1CDBA373008CA97E;
+			remoteInfo = CodeGenerationExample;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		143F4F7AB02FBB2D7D18032B /* Pods-CodeGenerationExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CodeGenerationExample.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CodeGenerationExample/Pods-CodeGenerationExample.debug.xcconfig"; sourceTree = "<group>"; };
@@ -46,6 +57,9 @@
 		8431D8A01CDBAAFE00BB0679 /* Turle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Turle.swift; sourceTree = "<group>"; };
 		8431D8A21CDBAB4800BB0679 /* CodeGenerationDefinition.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CodeGenerationDefinition.csv; sourceTree = "<group>"; };
 		8431D8A51CDBAC7100BB0679 /* ExampleContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExampleContainer.swift; sourceTree = "<group>"; };
+		8431D8AB1CDBB47E00BB0679 /* CodeGenerationExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CodeGenerationExampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		8431D8AD1CDBB47E00BB0679 /* CodeGenerationExampleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeGenerationExampleTests.swift; sourceTree = "<group>"; };
+		8431D8AF1CDBB47E00BB0679 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +68,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				EB11BF958F6A888FEC7598D2 /* Pods_CodeGenerationExample.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8431D8A81CDBB47E00BB0679 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -72,6 +93,7 @@
 			isa = PBXGroup;
 			children = (
 				840B7FDF1CDBA373008CA97E /* CodeGenerationExample */,
+				8431D8AC1CDBB47E00BB0679 /* CodeGenerationExampleTests */,
 				840B7FDE1CDBA373008CA97E /* Products */,
 				9C90A5DDE5ECF84F38B92C3F /* Pods */,
 				47FBD271FB037943E42471E7 /* Frameworks */,
@@ -82,6 +104,7 @@
 			isa = PBXGroup;
 			children = (
 				840B7FDD1CDBA373008CA97E /* CodeGenerationExample.app */,
+				8431D8AB1CDBB47E00BB0679 /* CodeGenerationExampleTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -117,6 +140,15 @@
 			name = Classes;
 			sourceTree = "<group>";
 		};
+		8431D8AC1CDBB47E00BB0679 /* CodeGenerationExampleTests */ = {
+			isa = PBXGroup;
+			children = (
+				8431D8AD1CDBB47E00BB0679 /* CodeGenerationExampleTests.swift */,
+				8431D8AF1CDBB47E00BB0679 /* Info.plist */,
+			);
+			path = CodeGenerationExampleTests;
+			sourceTree = "<group>";
+		};
 		9C90A5DDE5ECF84F38B92C3F /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -150,6 +182,24 @@
 			productReference = 840B7FDD1CDBA373008CA97E /* CodeGenerationExample.app */;
 			productType = "com.apple.product-type.application";
 		};
+		8431D8AA1CDBB47E00BB0679 /* CodeGenerationExampleTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8431D8B41CDBB47E00BB0679 /* Build configuration list for PBXNativeTarget "CodeGenerationExampleTests" */;
+			buildPhases = (
+				8431D8A71CDBB47E00BB0679 /* Sources */,
+				8431D8A81CDBB47E00BB0679 /* Frameworks */,
+				8431D8A91CDBB47E00BB0679 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				8431D8B11CDBB47E00BB0679 /* PBXTargetDependency */,
+			);
+			name = CodeGenerationExampleTests;
+			productName = CodeGenerationExampleTests;
+			productReference = 8431D8AB1CDBB47E00BB0679 /* CodeGenerationExampleTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -162,6 +212,10 @@
 				TargetAttributes = {
 					840B7FDC1CDBA373008CA97E = {
 						CreatedOnToolsVersion = 7.3;
+					};
+					8431D8AA1CDBB47E00BB0679 = {
+						CreatedOnToolsVersion = 7.3;
+						TestTargetID = 840B7FDC1CDBA373008CA97E;
 					};
 				};
 			};
@@ -179,6 +233,7 @@
 			projectRoot = "";
 			targets = (
 				840B7FDC1CDBA373008CA97E /* CodeGenerationExample */,
+				8431D8AA1CDBB47E00BB0679 /* CodeGenerationExampleTests */,
 			);
 		};
 /* End PBXProject section */
@@ -192,6 +247,13 @@
 				840B7FE81CDBA373008CA97E /* Assets.xcassets in Resources */,
 				8431D8A31CDBAB4800BB0679 /* CodeGenerationDefinition.csv in Resources */,
 				840B7FE61CDBA373008CA97E /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8431D8A91CDBB47E00BB0679 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -278,7 +340,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		8431D8A71CDBB47E00BB0679 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8431D8AE1CDBB47E00BB0679 /* CodeGenerationExampleTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		8431D8B11CDBB47E00BB0679 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 840B7FDC1CDBA373008CA97E /* CodeGenerationExample */;
+			targetProxy = 8431D8B01CDBB47E00BB0679 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		840B7FE41CDBA373008CA97E /* Main.storyboard */ = {
@@ -409,6 +487,30 @@
 			};
 			name = Release;
 		};
+		8431D8B21CDBB47E00BB0679 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = CodeGenerationExampleTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = swinject.CodeGenerationExampleTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CodeGenerationExample.app/CodeGenerationExample";
+			};
+			name = Debug;
+		};
+		8431D8B31CDBB47E00BB0679 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = CodeGenerationExampleTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = swinject.CodeGenerationExampleTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CodeGenerationExample.app/CodeGenerationExample";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -429,6 +531,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		8431D8B41CDBB47E00BB0679 /* Build configuration list for PBXNativeTarget "CodeGenerationExampleTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8431D8B21CDBB47E00BB0679 /* Debug */,
+				8431D8B31CDBB47E00BB0679 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};
