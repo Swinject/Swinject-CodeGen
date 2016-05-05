@@ -5,9 +5,9 @@ install:
   - export PATH="$PWD/bin:$PATH"
   - bundle install
   - pod setup
+  - pod install --project-directory=ExampleProject/CodeGenerationExample
 script:
   - ruby test.rb
-  - pod install --project-directory=ExampleProject/CodeGenerationExample
   - scan --scheme CodeGenerationExample --workspace ExampleProject/CodeGenerationExample/CodeGenerationExample.xcworkspace
 rvm:
   - 2.0
