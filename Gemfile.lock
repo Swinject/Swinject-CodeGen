@@ -62,6 +62,7 @@ PLATFORMS
 
 DEPENDENCIES
   cocoapods (= 1.0.0.beta.8)
+  minitest
 
 BUNDLED WITH
    1.11.2
