@@ -1,5 +1,7 @@
 # Swinject Code Generation
 
+[![Build Status](https://travis-ci.org/Swinject/Swinject-CodeGen.svg?branch=master)](https://travis-ci.org/Swinject/Swinject-CodeGen)
+
 I would call it a very elaborated proof of concept, though we use it in production atm.
 We are open for every kind of feedback, improvements of the generated code/templates, discussion of the input format etc.
 
