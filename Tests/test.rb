@@ -2,7 +2,7 @@ require 'minitest/autorun'
 
 class TestCodegeneration < MiniTest::Unit::TestCase
   def buildCSV(fileName)
-    %x(./swinject_codegen -i #{fileName}).chomp
+    %x(./../codegen/swinject_codegen -i #{fileName}).chomp
   end
 
   def readFile(fileName)
@@ -10,7 +10,7 @@ class TestCodegeneration < MiniTest::Unit::TestCase
   end
 
   def runTest(baseFileName)
-    assert_equal buildCSV("ReadmeExamples/#{baseFileName}.csv"), readFile("ExpectedCode/#{baseFileName}.swift")
+    assert_equal buildCSV("Examples/#{baseFileName}.csv"), readFile("ExpectedCode/#{baseFileName}.swift")
   end
 
   def test_example_a

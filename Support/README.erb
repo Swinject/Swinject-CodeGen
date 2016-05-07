@@ -162,47 +162,47 @@ Example for a .yml definition:
 
 #### Input
 ```CSV
-<%= File.read("ReadmeExamples/ExampleA.csv").chomp %>
+<%= File.read("../Tests/Examples/ExampleA.csv").chomp %>
 ```
 
 #### Output
 ```Swift
-<%= %x(./swinject_codegen -i ReadmeExamples/ExampleA.csv).chomp %>
+<%= %x(./../codegen/swinject_codegen -i ../Tests/Examples/ExampleA.csv).chomp %>
 ```
 
 ### Example B: Different source and target
 
 #### Input
 ```CSV
-<%= File.read("ReadmeExamples/ExampleB.csv").chomp %>
+<%= File.read("../Tests/Examples/ExampleB.csv").chomp %>
 ```
 
 #### Output
 ```Swift
-<%= %x(./swinject_codegen -i ReadmeExamples/ExampleB.csv).chomp %>
+<%= %x(./../codegen/swinject_codegen -i ../Tests/Examples/ExampleB.csv).chomp %>
 ```
 
 ### Example C: Different source and target class with name
 
 #### Input
 ```CSV
-<%= File.read("ReadmeExamples/ExampleC.csv").chomp %>
+<%= File.read("../Tests/Examples/ExampleC.csv").chomp %>
 ```
 
 #### Output
 ```Swift
-<%= %x(./swinject_codegen -i ReadmeExamples/ExampleC.csv).chomp %>
+<%= %x(./../codegen/swinject_codegen -i ../Tests/Examples/ExampleC.csv).chomp %>
 ```
 
 ### Example D: Different source and target with a single, explicitly named argument
 #### Input
 ```CSV
-<%= File.read("ReadmeExamples/ExampleD.csv").chomp %>
+<%= File.read("../Tests/Examples/ExampleD.csv").chomp %>
 ```
 
 #### Output
 ```Swift
-<%= %x(./swinject_codegen -i ReadmeExamples/ExampleD.csv).chomp %>
+<%= %x(./../codegen/swinject_codegen -i ../Tests/Examples/ExampleD.csv).chomp %>
 ```
 
 ### Example E: Different source and target with multiple arguments, both explicitly named and not
@@ -210,23 +210,23 @@ If no explicit name is given, the lowercase type is used as argumentname.
 
 #### Input
 ```CSV
-<%= File.read("ReadmeExamples/ExampleE.csv").chomp %>
+<%= File.read("../Tests/Examples/ExampleE.csv").chomp %>
 ```
 
 #### Output
 ```Swift
-<%= %x(./swinject_codegen -i ReadmeExamples/ExampleE.csv).chomp %>
+<%= %x(./../codegen/swinject_codegen -i ../Tests/Examples/ExampleE.csv).chomp %>
 ```
 
 ### Example F:  Different source and target with name with multiple arguments, both explicitly named and not
 #### Input
 ```CSV
-<%= File.read("ReadmeExamples/ExampleF.csv").chomp %>
+<%= File.read("../Tests/Examples/ExampleF.csv").chomp %>
 ```
 
 #### Output
 ```Swift
-<%= %x(./swinject_codegen -i ReadmeExamples/ExampleF.csv).chomp %>
+<%= %x(./../codegen/swinject_codegen -i ../Tests/Examples/ExampleF.csv).chomp %>
 ```
 
 ## Usage Examples
