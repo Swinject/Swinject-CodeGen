@@ -2,8 +2,8 @@ require 'yaml'
 
 class YMLParser
 
-  def parseYML(inputFilename)
-    return YAML.load_file(inputFilename)
+  def parse_YML(input_filename)
+    return YAML.load_file(input_filename)
   end
 
 end

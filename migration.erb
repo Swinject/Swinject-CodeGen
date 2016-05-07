@@ -3,9 +3,9 @@ find . -type f | grep ".swift" > swiftindex.temp
 while IFS= read -r filename
 do
     LC_ALL=C sed -i "" \
-    <% @migrationArray.each do |hash| -%>
-    -e s/<%=hash[:resolveFunctionCall]%>/<%=hash[:resolveFunctionSignatureRegex]%>/g \
-        -e s/<%=hash[:registerFunctionCall]%>/<%=hash[:registerFunctionSignatureRegex]%>/g \
+    <% @migration_array.each do |hash| -%>
+    -e s/<%=hash[:resolve_function_call]%>/<%=hash[:resolve_function_signature_regex]%>/g \
+        -e s/<%=hash[:register_function_call]%>/<%=hash[:register_function_signature_regex]%>/g \
     <% end -%> "$filename"
 done < swiftindex.temp
 rm swiftindex.temp

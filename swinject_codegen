@@ -24,11 +24,11 @@ require_relative "./YMLSerializer"
     @options[:OUTPUT_FILE] = o
   end
 
-  opts.on("-m", "--migration", "Generate migration.sh files to automatically replace existing calls in swift code.") do |v|
+  opts.on("-m", "--migration", "Generate migration.sh files to automatically replace existing calls in swift code.") do
     @options[:MIGRATION] = true
   end
 
-  opts.on("-c", "--convert", "Convert the input file into the other format") do |v|
+  opts.on("-c", "--convert", "Convert the input file into the other format") do
     @options[:CONVERT] = true
   end
 
@@ -41,151 +41,150 @@ end
 def main
   @parser.parse!
 
-  inputFilename = @options[:INPUT_FILE]
+  input_filename = @options[:INPUT_FILE]
 
-  definitionHash = parseInputFile(inputFilename)
+  definition_hash = parse_input_file(input_filename)
 
   if @options[:CONVERT]
 
-    outputFilename = @options[:OUTPUT_FILE]
+    output_filename = @options[:OUTPUT_FILE]
 
-    if inputFilename.end_with?("csv")
-      YMLSerializer.new.serializeHashToYML(definitionHash, outputFilename)
-    elsif inputFilename.end_with?("yml")
-      serializeHashToCSV(definitionHash, outputFilename)
+    if input_filename.end_with?("csv")
+      YMLSerializer.new.serialize_hash_to_YML(definition_hash, output_filename)
+    elsif input_filename.end_with?("yml")
+      serialize_hash_to_CSV(definition_hash, output_filename)
     end
 
-    unless outputFilename.nil?
-      puts "Converted #{inputFilename} to #{outputFilename}"
+    unless output_filename.nil?
+      puts "Converted #{input_filename} to #{output_filename}"
     end
 
     exit 0
   end
 
-  # prepare definitions
-  prepareDefinitions(definitionHash)
+  prepare_definitions(definition_hash)
 
   if @options[:MIGRATION]
-    writeMigrationFile(definitionHash, @options[:OUTPUT_FILE])
+    write_migration_file(definition_hash, @options[:OUTPUT_FILE])
   end
 
   unless @options[:CONVERT] || @options[:MIGRATION]
-    writeContainerFile(definitionHash, @options[:OUTPUT_FILE])
+    write_container_file(definition_hash, @options[:OUTPUT_FILE])
   end
 end
 
-def parseInputFile(inputFilename)
-  if inputFilename.end_with?("csv")
-    return CSVParser.new.parseCSV(inputFilename)
-  elsif inputFilename.end_with?("yml")
-    return YMLParser.new.parseYML(inputFilename)
+def parse_input_file(input_filename)
+  if input_filename.end_with?("csv")
+    return CSVParser.new.parse_CSV(input_filename)
+  elsif input_filename.end_with?("yml")
+    return YMLParser.new.parse_YML(input_filename)
   else
-    puts "unknown input format for file #{inputFilename}"
+    puts "unknown input format for file #{input_filename}"
     exit
   end
 end
 
-def templatesFolder
+def templates_folder
   File.expand_path(File.dirname(__FILE__))
 end
 
-def writeContainerFile(inputHash, outputFilename)
-  @contentArray = inputHash[:DEFINITIONS]
-  @dependencies = inputHash[:DEPENDENCIES]
+def write_container_file(input_hash, output_filename)
+  @content_array = input_hash[:DEFINITIONS]
+  @dependencies = input_hash[:DEPENDENCIES]
 
-  code = ERB.new(File.read("#{templatesFolder()}/container.erb"), nil, "-").result
+  code = ERB.new(File.read("#{templates_folder()}/container.erb"), nil, "-").result
 
-  if outputFilename.nil?
+  if output_filename.nil?
     puts code
   else
-    File.open(outputFilename, 'w') do |fileToWriteTo|
-      fileToWriteTo.puts code
-      puts "Generated code in #{outputFilename}"
+    File.open(output_filename, 'w') do |file_to_write_to|
+      file_to_write_to.puts code
+      puts "Generated code in #{output_filename}"
     end
   end
 
 end
 
-def writeMigrationFile(inputHash, outputFilename)
-  @migrationArray = []
+def write_migration_file(input_hash, output_filename)
+  @migration_array = []
 
-  inputHash[:DEFINITIONS].each do |definition|
-    registerFunctionCallWithoutLastComma = definition[:registerFunctionCall].reverse.sub(",", "").reverse
+  input_hash[:DEFINITIONS].each do |definition|
+    register_function_call_without_last_comma = definition[:register_function_call].reverse.sub(",", "").reverse
 
-    migrationHash = {
-      :resolveFunctionSignatureRegex => Shellwords.escape(".#{definition[:resolveFunctionSignature].split("->").first.strip}"),
-      :resolveFunctionCall => Shellwords.escape("#{definition[:resolveFunctionCall]})!"),
-      :registerFunctionSignatureRegex => Shellwords.escape(".#{definition[:registerFunctionSignature].split("(").first}"),
-      :registerFunctionCall => Shellwords.escape("#{registerFunctionCallWithoutLastComma})")
+    migration_hash = {
+      :resolve_function_signatureRegex => Shellwords.escape(".#{definition[:resolve_function_signature].split("->").first.strip}"),
+      :resolve_function_call => Shellwords.escape("#{definition[:resolve_function_call]})!"),
+      :register_function_signatureRegex => Shellwords.escape(".#{definition[:register_function_signature].split("(").first}"),
+      :register_function_call => Shellwords.escape("#{register_function_call_without_last_comma})")
     }
 
-    @migrationArray.push migrationHash
+    @migration_array.push migration_hash
   end
 
-  migrationCode = ERB.new(File.read("#{templatesFolder()}/migration.erb"), nil, "-").result
+  migration_code = ERB.new(File.read("#{templates_folder()}/migration.erb"), nil, "-").result
 
-  if outputFilename.nil?
-    puts migrationCode
+  if output_filename.nil?
+    puts migration_code
   else
-    migrationFileName = "#{outputFilename}.migration.sh"
-    File.open(migrationFileName, 'w') do |fileToWriteTo|
-      fileToWriteTo.puts migrationCode
-      puts "Generated migration code in #{migrationFileName}"
+    migration_file_name = "#{output_filename}.migration.sh"
+    File.open(migration_file_name, 'w') do |file_to_write_to|
+      file_to_write_to.puts migration_code
+      puts "Generated migration code in #{migration_file_name}"
     end
   end
 
 end
 
-def prepareDefinitions(hash)
+def prepare_definitions(hash)
   definitions = hash[:DEFINITIONS]
 
-  definitions.each do | definition |
+  definitions.each do |definition|
     name = definition[:name]
 
-    hasNoName = (name.nil? || name.empty?)
-    argumentHashes = definition[:arguments]
+    has_no_name = (name.nil? || name.empty?)
+    argument_hashes = definition[:arguments]
 
-    registerFunctionSignature = "register"
-    registerFunctionSignature << definition[:targetClassName]
-    registerFunctionSignature << "_#{name}" unless hasNoName
-    registerFunctionSignature << "(registerClosure: (resolver: ResolverType"
-    registerFunctionSignature << ", " unless (argumentHashes.nil? || argumentHashes.empty?)
-    registerFunctionSignature << argumentHashes.map {|a| "#{a[:argumentName]}: #{a[:argumentType]}"}.join(", ") unless (argumentHashes.nil? || argumentHashes.empty?)
-    registerFunctionSignature << ") -> (#{definition[:targetClass]})) -> ServiceEntry<#{definition[:baseClass]}>"
+    register_function_signature = "register"
+    register_function_signature << definition[:target_class_name]
+    register_function_signature << "_#{name}" unless has_no_name
+    register_function_signature << "(registerClosure: (resolver: ResolverType"
+    register_function_signature << ", " unless (argument_hashes.nil? || argument_hashes.empty?)
+    register_function_signature << argument_hashes.map {|a| "#{a[:argument_name]}: #{a[:argument_type]}"}.join(", ") unless (argument_hashes.nil? || argument_hashes.empty?)
+    register_function_signature << ") -> (#{definition[:target_class]})) -> ServiceEntry<#{definition[:base_class]}>"
 
-    registerFunctionCall = ".register("
-    registerFunctionCall << "#{definition[:baseClass]}.self,"
-    registerFunctionCall << " name: \"#{name}\"," unless hasNoName
+    register_function_call = ".register("
+    register_function_call << "#{definition[:base_class]}.self,"
+    register_function_call << " name: \"#{name}\"," unless has_no_name
 
-    resolveFunctionSignature = "resolve"
-    resolveFunctionSignature << definition[:targetClassName]
-    resolveFunctionSignature << "_#{name}" unless hasNoName
-    resolveFunctionSignature << "("
-    resolveFunctionSignature << argumentHashes.each_with_index.map {|a,i| "#{a[:argumentName] + ' ' if i==0}#{a[:argumentName]}: #{a[:argumentType]}"}.join(", ") unless (argumentHashes.nil? || argumentHashes.empty?)
-    resolveFunctionSignature << ") -> #{definition[:targetClass]}"
+    resolve_function_signature = "resolve"
+    resolve_function_signature << definition[:target_class_name]
+    resolve_function_signature << "_#{name}" unless has_no_name
+    resolve_function_signature << "("
+    resolve_function_signature << argument_hashes.each_with_index.map {|a,i| "#{a[:argument_name] + ' ' if i==0}#{a[:argument_name]}: #{a[:argument_type]}"}.join(", ") unless (argument_hashes.nil? || argument_hashes.empty?)
+    resolve_function_signature << ") -> #{definition[:target_class]}"
 
-    resolveFunctionCall = ".resolve("
-    resolveFunctionCall << "#{definition[:baseClass]}.self"
-    resolveFunctionCall << ", name: \"#{name}\"" unless hasNoName
+    resolve_function_call = ".resolve("
+    resolve_function_call << "#{definition[:base_class]}.self"
+    resolve_function_call << ", name: \"#{name}\"" unless has_no_name
 
-    definition[:resolveFunctionSignature] = resolveFunctionSignature
-    definition[:resolveFunctionCall] = resolveFunctionCall
-    definition[:registerFunctionSignature] = registerFunctionSignature
-    definition[:registerFunctionCall] = registerFunctionCall
+    definition[:resolve_function_signature] = resolve_function_signature
+    definition[:resolve_function_call] = resolve_function_call
+    definition[:register_function_signature] = register_function_signature
+    definition[:register_function_call] = register_function_call
   end
 end
 
-def serializeHashToCSV(hash, outputFilename)
-  @contentArray = hash[:DEFINITIONS]
+def serialize_hash_to_CSV(hash, output_filename)
+  @content_array = hash[:DEFINITIONS]
   @dependencies = hash[:DEPENDENCIES]
 
-  code = ERB.new(File.read("#{templatesFolder}/csv.erb"), nil, "-").result
+  code = ERB.new(File.read("#{templates_folder}/csv.erb"), nil, "-").result
 
-  if outputFilename.nil?
+  if output_filename.nil?
     puts code
   else
-    File.open(outputFilename, 'w') do |fileToWriteTo|
-      fileToWriteTo.puts code
+    File.open(output_filename, 'w') do |file_to_write_to|
+      file_to_write_to.puts code
     end
   end
 
