@@ -1,6 +1,6 @@
 <% @dependencies.uniq.each do |dependency| -%>
 # ADD_DEPENDENCY <%= dependency %>
 <% end -%>
-<% @contentArray.each do |hash| -%>
-<%=hash[:baseClass] unless hash[:baseClass].nil? %>; <%= hash[:targetClass] unless hash[:targetClass].nil? %> ; <%= hash[:name] unless hash[:name].nil? %> ; <%= hash[:arguments].map {|a| "#{a[:argumentName]}: #{a[:argumentType]}"}.join("; ") unless hash[:arguments].nil? %>
+<% @content_array.each do |hash| -%>
+<%=hash[:base_class] unless hash[:base_class].nil? %>; <%= hash[:target_class] unless hash[:target_class].nil? %> ; <%= hash[:name] unless hash[:name].nil? %> ; <%= hash[:arguments].map {|a| "#{a[:argument_name]}: #{a[:argument_type]}"}.join("; ") unless hash[:arguments].nil? %>
 <% end -%>
