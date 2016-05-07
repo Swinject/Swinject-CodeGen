@@ -7,17 +7,17 @@ import  <%= dependency %>
 <% end -%>
 
 extension Resolvable {
-<% @contentArray.each do |hash| %>
-    func <%= hash[:resolveFunctionSignature] %> {
-        return self<%= hash[:resolveFunctionCall] %><%= ", argument: #{hash[:arguments][0][:argumentName]}" if !hash[:arguments].nil? && hash[:arguments].count == 1 -%><%= ", arguments: (#{hash[:arguments].map {|a| a[:argumentName]}.join(', ')})" if !hash[:arguments].nil? && hash[:arguments].count > 1 -%>)<%=hash[:baseClass] != hash[:targetClass] ? " as! #{hash[:targetClass]}" : "!"%>
+<% @content_array.each do |hash| %>
+    func <%= hash[:resolve_function_signature] %> {
+        return self<%= hash[:resolve_function_call] %><%= ", argument: #{hash[:arguments][0][:argument_name]}" if !hash[:arguments].nil? && hash[:arguments].count == 1 -%><%= ", arguments: (#{hash[:arguments].map {|a| a[:argument_name]}.join(', ')})" if !hash[:arguments].nil? && hash[:arguments].count > 1 -%>)<%=hash[:base_class] != hash[:target_class] ? " as! #{hash[:target_class]}" : "!"%>
     }
 <% end -%>
 }
 
 extension Container {
-<% @contentArray.each do |hash| %>
-    func <%= hash[:registerFunctionSignature] %> {
-        return self<%= hash[:registerFunctionCall] %> factory: registerClosure)
+<% @content_array.each do |hash| %>
+    func <%= hash[:register_function_signature] %> {
+        return self<%= hash[:register_function_call] %> factory: registerClosure)
     }
 <% end -%>
 }

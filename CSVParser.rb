@@ -1,12 +1,12 @@
 class CSVParser
 
-  def parseCSV(inputFilename)
-    returnHash = {
+  def parse_CSV(input_filename)
+    result_hash = {
       :DEPENDENCIES => [],
       :DEFINITIONS => []
     }
 
-    f = File.open(inputFilename)
+    f = File.open(input_filename)
 
     f.each_line do |line|
       if line.nil? || line.chomp.empty?
@@ -14,52 +14,52 @@ class CSVParser
       elsif line.start_with?("#")
         # detect command
         if(line.start_with?("#ADD_DEPENDENCY "))
-          returnHash[:DEPENDENCIES].push(line.split(" ")[1])
+          result_hash[:DEPENDENCIES].push(line.split(" ")[1])
         elsif(line.start_with?("# ADD_DEPENDENCY "))
-          returnHash[:DEPENDENCIES].push(line.split(" ")[2])
+          result_hash[:DEPENDENCIES].push(line.split(" ")[2])
         end
       elsif line.start_with?("//")
         # ignores comments
       else
         array = line.split(";").map { |a| a.strip }
         arguments = array[3..-1]
-        argumentHashes = nil
+        argument_hashes = nil
         unless arguments.nil?
           arguments.reject { |a| a.empty? }
-          argumentHashes = arguments.map do |a|
+          argument_hashes = arguments.map do |a|
             hash = nil
             if(a.include?(":"))
               hash = {
-                :argumentName => a.split(":").first.strip,
-                :argumentType => a.split(":").last.strip
+                :argument_name => a.split(":").first.strip,
+                :argument_type => a.split(":").last.strip
               }
             else
               hash = {
-                :argumentName => a.downcase,
-                :argumentType => a
+                :argument_name => a.downcase,
+                :argument_type => a
               }
             end
             hash
           end
         end
 
-        baseClass = array[0]
-        targetClass = array[1] || baseClass
-        targetClassName = targetClass.gsub("<", "").gsub(">", "").gsub(".", "")
+        base_class = array[0]
+        target_class = array[1] || base_class
+        target_class_name = target_class.gsub("<", "").gsub(">", "").gsub(".", "")
         name = array[2]
 
         hash = {
-          :baseClass => baseClass,
-          :targetClass => targetClass,
-          :targetClassName => targetClassName,
+          :base_class => base_class,
+          :target_class => target_class,
+          :target_class_name => target_class_name,
           :name => name,
-          :arguments => argumentHashes
+          :arguments => argument_hashes
         }
 
-        returnHash[:DEFINITIONS].push hash
+        result_hash[:DEFINITIONS].push hash
       end
     end
-    return returnHash
+    return result_hash
   end
 
 end
