@@ -109,50 +109,50 @@ Example for a .yml definition:
 :DEPENDENCIES:
   - ADependency
 :DEFINITIONS:
-- :baseClass: PersonType
-  :targetClass: InjectablePerson
-  :targetClassName: InjectablePerson
+- :base_class: PersonType
+  :target_class: InjectablePerson
+  :target_class_name: InjectablePerson
   :name: initializer
-- :baseClass: PersonType
-  :targetClass: InjectablePerson
-  :targetClassName: InjectablePerson
-- :baseClass: PersonType
-  :targetClass: PersonType
-  :targetClassName: PersonType
-- :baseClass: AnotherPersonType
-  :targetClass: AnotherPersonType
-  :targetClassName: AnotherPersonType
-- :baseClass: PersonType
-  :targetClass: InjectablePerson
-  :targetClassName: InjectablePerson
+- :base_class: PersonType
+  :target_class: InjectablePerson
+  :target_class_name: InjectablePerson
+- :base_class: PersonType
+  :target_class: PersonType
+  :target_class_name: PersonType
+- :base_class: AnotherPersonType
+  :target_class: AnotherPersonType
+  :target_class_name: AnotherPersonType
+- :base_class: PersonType
+  :target_class: InjectablePerson
+  :target_class_name: InjectablePerson
   :arguments:
-  - :argumentName: argumentName
-    :argumentType: ArgumentType
-- :baseClass: PersonType
-  :targetClass: InjectablePerson
-  :targetClassName: InjectablePerson
+  - :argument_name: argument_name
+    :argument_type: argument_type
+- :base_class: PersonType
+  :target_class: InjectablePerson
+  :target_class_name: InjectablePerson
   :arguments:
-  - :argumentName: argumentName
-    :argumentType: ArgumentType
-  - :argumentName: argumenttypewithoutspecificname
-    :argumentType: ArgumentTypeWithoutSpecificName
-  - :argumentName: title
-    :argumentType: String
-  - :argumentName: string
-    :argumentType: String
-- :baseClass: PersonType
-  :targetClass: InjectablePerson
-  :targetClassName: InjectablePerson
+  - :argument_name: argument_name
+    :argument_type: argument_type
+  - :argument_name: argument_typewithoutspecificname
+    :argument_type: argument_typeWithoutSpecificName
+  - :argument_name: title
+    :argument_type: String
+  - :argument_name: string
+    :argument_type: String
+- :base_class: PersonType
+  :target_class: InjectablePerson
+  :target_class_name: InjectablePerson
   :name: initializer
   :arguments:
-  - :argumentName: argumentName
-    :argumentType: ArgumentType
-  - :argumentName: argumenttypewithoutspecificname
-    :argumentType: ArgumentTypeWithoutSpecificName
-  - :argumentName: title
-    :argumentType: String
-  - :argumentName: string
-    :argumentType: String
+  - :argument_name: argument_name
+    :argument_type: argument_type
+  - :argument_name: argument_typewithoutspecificname
+    :argument_type: argument_typeWithoutSpecificName
+  - :argument_name: title
+    :argument_type: String
+  - :argument_name: string
+    :argument_type: String
 ```
 
 ## Generation Examples
