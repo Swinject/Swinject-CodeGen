@@ -25,3 +25,5 @@ ExampleProject/CodeGenerationExample/CodeGenerationExample/ExampleContainer.swif
 ExampleProject/CodeGenerationExample/Pods
 ExampleProject/CodeGenerationExample/test_output
 test_output
+ExampleScript/csvMigration.sh
+ExampleScript/ymlMigration.sh
