@@ -2,7 +2,7 @@ AllCops:
   TargetRubyVersion: 2.0
   Exclude:
     - '*.podspec'
-    - 'ExampleProject/**/*.*'
+    - 'ExampleProject/**/**'
 
 Style/StringLiterals:
   EnforcedStyle: double_quotes

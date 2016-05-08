@@ -1,5 +1,6 @@
+# responsible for parsing the csv files
 class CSVParser
-  def parse_CSV(input_filename)
+  def parse_csv(input_filename)
     result_hash = {
       DEPENDENCIES: [],
       DEFINITIONS: []

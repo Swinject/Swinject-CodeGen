@@ -2,9 +2,9 @@
 require "erb"
 require "Shellwords"
 require "optparse"
-require_relative "../source/CSVParser"
-require_relative "../source/YMLParser"
-require_relative "../source/YMLSerializer"
+require_relative "../source/csv_parser"
+require_relative "../source/yml_parser"
+require_relative "../source/yml_serializer"
 
 @options = {
   MIGRATION: false,
@@ -50,7 +50,7 @@ def main
     output_filename = @options[:OUTPUT_FILE]
 
     if input_filename.end_with?("csv")
-      YMLSerializer.new.serialize_hash_to_YML(definition_hash, output_filename)
+      YMLSerializer.new.serialize_hash_to_yml(definition_hash, output_filename)
     elsif input_filename.end_with?("yml")
       serialize_hash_to_CSV(definition_hash, output_filename)
     end
@@ -75,9 +75,9 @@ end
 
 def parse_input_file(input_filename)
   if input_filename.end_with?("csv")
-    return CSVParser.new.parse_CSV(input_filename)
+    return CSVParser.new.parse_csv(input_filename)
   elsif input_filename.end_with?("yml")
-    return YMLParser.new.parse_YML(input_filename)
+    return YMLParser.new.parse_yml(input_filename)
   else
     puts "unknown input format for file #{input_filename}"
     exit

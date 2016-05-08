@@ -1,7 +1,8 @@
 require "yaml"
 
+# class responsible for serializing to yaml
 class YMLSerializer
-  def serialize_hash_to_YML(hash, output_filename)
+  def serialize_hash_to_yml(hash, output_filename)
     code = hash.to_yaml
 
     if output_filename.nil?
