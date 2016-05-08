@@ -1,5 +1,5 @@
-<% @dependencies.uniq.each do |dependency| -%>
-# ADD_DEPENDENCY <%= dependency %>
+<% @headers.uniq.each do |header| -%>
+# ADD_HEADER <%= "#{header}" %>
 <% end -%>
 <% @content_array.each do |hash| -%>
 <%=hash[:service.to_s] unless hash[:service.to_s].nil? %>; <%= hash[:component.to_s] unless hash[:component.to_s].nil? %> ; <%= hash[:name.to_s] unless hash[:name.to_s].nil? %> ; <%= hash[:arguments.to_s].map {|a| "#{a[:argument_name.to_s]}: #{a[:argument_type.to_s]}"}.join("; ") unless hash[:arguments.to_s].nil? %>

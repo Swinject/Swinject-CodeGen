@@ -1,4 +1,4 @@
-# ADD_DEPENDENCY ADependency
+# ADD_HEADER import ADependency
 PersonType; InjectablePerson; initializer
 PersonType; InjectablePerson
 PersonType; PersonType
