@@ -1,0 +1,7 @@
+AllCops:
+  TargetRubyVersion: 2.0
+  Exclude:
+    - '*.podspec'
+
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
