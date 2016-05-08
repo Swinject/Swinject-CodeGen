@@ -106,53 +106,46 @@ Empty lines are ignored and can be used for grouping.
 Example for a .yml definition:
 ```yml
 ---
-:DEPENDENCIES:
+DEPENDENCIES:
   - ADependency
-:DEFINITIONS:
-- :base_class: PersonType
-  :target_class: InjectablePerson
-  :target_class_name: InjectablePerson
-  :name: initializer
-- :base_class: PersonType
-  :target_class: InjectablePerson
-  :target_class_name: InjectablePerson
-- :base_class: PersonType
-  :target_class: PersonType
-  :target_class_name: PersonType
-- :base_class: AnotherPersonType
-  :target_class: AnotherPersonType
-  :target_class_name: AnotherPersonType
-- :base_class: PersonType
-  :target_class: InjectablePerson
-  :target_class_name: InjectablePerson
-  :arguments:
-  - :argument_name: argument_name
-    :argument_type: argument_type
-- :base_class: PersonType
-  :target_class: InjectablePerson
-  :target_class_name: InjectablePerson
-  :arguments:
-  - :argument_name: argument_name
-    :argument_type: argument_type
-  - :argument_name: argument_typewithoutspecificname
-    :argument_type: argument_typeWithoutSpecificName
-  - :argument_name: title
-    :argument_type: String
-  - :argument_name: string
-    :argument_type: String
-- :base_class: PersonType
-  :target_class: InjectablePerson
-  :target_class_name: InjectablePerson
-  :name: initializer
-  :arguments:
-  - :argument_name: argument_name
-    :argument_type: argument_type
-  - :argument_name: argument_typewithoutspecificname
-    :argument_type: argument_typeWithoutSpecificName
-  - :argument_name: title
-    :argument_type: String
-  - :argument_name: string
-    :argument_type: String
+DEFINITIONS:
+- service: PersonType
+  component: InjectablePerson
+  name: initializer
+- service: PersonType
+  component: InjectablePerson
+- service: PersonType
+  component: PersonType
+- service: AnotherPersonType
+  component: AnotherPersonType
+- service: PersonType
+  component: InjectablePerson
+  arguments:
+  - argument_name: argument_name
+    argument_type: argument_type
+- service: PersonType
+  component: InjectablePerson
+  arguments:
+  - argument_name: argument_name
+    argument_type: argument_type
+  - argument_name: argument_typewithoutspecificname
+    argument_type: argument_typeWithoutSpecificName
+  - argument_name: title
+    argument_type: String
+  - argument_name: string
+    argument_type: String
+- service: PersonType
+  component: InjectablePerson
+  name: initializer
+  arguments:
+  - argument_name: argument_name
+    argument_type: argument_type
+  - argument_name: argument_typewithoutspecificname
+    argument_type: argument_typeWithoutSpecificName
+  - argument_name: title
+    argument_type: String
+  - argument_name: string
+    argument_type: String
 ```
 
 ## Generation Examples
