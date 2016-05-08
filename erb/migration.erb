@@ -4,8 +4,8 @@ while IFS= read -r filename
 do
     LC_ALL=C sed -i "" \
     <% @migration_array.each do |hash| -%>
-    -e s/<%=hash[:resolve_function_call.to_s]%>/<%=hash[:resolve_function_signature_regex.to_s]%>/g \
-        -e s/<%=hash[:register_function_call.to_s]%>/<%=hash[:register_function_signature_regex.to_s]%>/g \
+    -e s/<%=hash[:resolve_function_call]%>/<%=hash[:resolve_function_signature_regex]%>/g \
+        -e s/<%=hash[:register_function_call]%>/<%=hash[:register_function_signature_regex]%>/g \
     <% end -%> "$filename"
 done < swiftindex.temp
 rm swiftindex.temp
