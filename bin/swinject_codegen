@@ -6,6 +6,7 @@ require_relative "../source/CSVParser"
 require_relative "../source/YMLParser"
 require_relative "../source/YMLSerializer"
 
+@swinject_version = 1
 @options = {
   :MIGRATION  => false,
   :CONVERT  => false,
@@ -39,6 +40,8 @@ require_relative "../source/YMLSerializer"
 end
 
 def main
+  @swinject_version = get_swinject_version()
+
   @parser.parse!
 
   input_filename = @options[:INPUT_FILE]
@@ -188,6 +191,25 @@ def serialize_hash_to_CSV(hash, output_filename)
     end
   end
 
+end
+
+def get_swinject_version
+  lockfile = "#{File.expand_path(File.dirname(__FILE__))}/../../../Podfile.lock"
+  swinject_version = 1
+  if File.exist?(lockfile)
+
+    # File.foreach(lockfile) do |file|
+    #   swinject_line = file.grep(
+    #   puts swinject_line
+    # end
+
+    version_line = File.read(lockfile).scan(/- Swinject \(.*/).first.scan(/\(.*\)/)
+    if version_line[2] == 2
+      swinject_version = 2
+    end
+  end
+
+  swinject_version
 end
 
 if __FILE__ == $0
