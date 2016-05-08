@@ -1,48 +1,48 @@
 ---
-:DEPENDENCIES:
+DEPENDENCIES:
   - ADependency
-:DEFINITIONS:
-- :service: PersonType
-  :component: InjectablePerson
-  :component_name: InjectablePerson
-  :name: initializer
-- :service: PersonType
-  :component: InjectablePerson
-  :component_name: InjectablePerson
-- :service: PersonType
-  :component: PersonType
-  :component_name: PersonType
-- :service: AnotherPersonType
-  :component: AnotherPersonType
-  :component_name: AnotherPersonType
-- :service: PersonType
-  :component: InjectablePerson
-  :component_name: InjectablePerson
-  :arguments:
-  - :argument_name: argument_name
-    :argument_type: argument_type
-- :service: PersonType
-  :component: InjectablePerson
-  :component_name: InjectablePerson
-  :arguments:
-  - :argument_name: argument_name
-    :argument_type: argument_type
-  - :argument_name: argument_typewithoutspecificname
-    :argument_type: argument_typeWithoutSpecificName
-  - :argument_name: title
-    :argument_type: String
-  - :argument_name: string
-    :argument_type: String
-- :service: PersonType
-  :component: InjectablePerson
-  :component_name: InjectablePerson
-  :name: initializer
-  :arguments:
-  - :argument_name: argument_name
-    :argument_type: argument_type
-  - :argument_name: argument_typewithoutspecificname
-    :argument_type: argument_typeWithoutSpecificName
-  - :argument_name: title
-    :argument_type: String
-  - :argument_name: string
-    :argument_type: String
+DEFINITIONS:
+- service: PersonType
+  component: InjectablePerson
+  component_name: InjectablePerson
+  name: initializer
+- service: PersonType
+  component: InjectablePerson
+  component_name: InjectablePerson
+- service: PersonType
+  component: PersonType
+  component_name: PersonType
+- service: AnotherPersonType
+  component: AnotherPersonType
+  component_name: AnotherPersonType
+- service: PersonType
+  component: InjectablePerson
+  component_name: InjectablePerson
+  arguments:
+  - argument_name: argument_name
+    argument_type: argument_type
+- service: PersonType
+  component: InjectablePerson
+  component_name: InjectablePerson
+  arguments:
+  - argument_name: argument_name
+    argument_type: argument_type
+  - argument_name: argument_typewithoutspecificname
+    argument_type: argument_typeWithoutSpecificName
+  - argument_name: title
+    argument_type: String
+  - argument_name: string
+    argument_type: String
+- service: PersonType
+  component: InjectablePerson
+  component_name: InjectablePerson
+  name: initializer
+  arguments:
+  - argument_name: argument_name
+    argument_type: argument_type
+  - argument_name: argument_typewithoutspecificname
+    argument_type: argument_typeWithoutSpecificName
+  - argument_name: title
+    argument_type: String
+  - argument_name: string
+    argument_type: String

@@ -89,8 +89,8 @@ def templates_folder
 end
 
 def write_container_file(input_hash, output_filename)
-  @content_array = input_hash[:DEFINITIONS]
-  @dependencies = input_hash[:DEPENDENCIES]
+  @content_array = input_hash[:DEFINITIONS.to_s]
+  @dependencies = input_hash[:DEPENDENCIES.to_s]
 
   code = ERB.new(File.read("#{templates_folder()}/container.erb"), nil, "-").result
 
@@ -108,13 +108,13 @@ end
 def write_migration_file(input_hash, output_filename)
   @migration_array = []
 
-  input_hash[:DEFINITIONS].each do |definition|
-    register_function_call_without_last_comma = definition[:register_function_call].reverse.sub(",", "").reverse
+  input_hash[:DEFINITIONS.to_s].each do |definition|
+    register_function_call_without_last_comma = definition[:register_function_call.to_s].reverse.sub(",", "").reverse
 
     migration_hash = {
-      :resolve_function_signature_regex => Shellwords.escape(".#{definition[:resolve_function_signature].split("->").first.strip}"),
+      :resolve_function_signature_regex.to_s => Shellwords.escape(".#{definition[:resolve_function_signature.to_s].split("->").first.strip}"),
       :resolve_function_call.to_s => Shellwords.escape("#{definition[:resolve_function_call]})!"),
-      :register_function_signature_regex => Shellwords.escape(".#{definition[:register_function_signature].split("(").first}"),
+      :register_function_signature_regex.to_s => Shellwords.escape(".#{definition[:register_function_signature.to_s].split("(").first}"),
       :register_function_call.to_s => Shellwords.escape("#{register_function_call_without_last_comma})")
     }
 
@@ -136,47 +136,47 @@ def write_migration_file(input_hash, output_filename)
 end
 
 def prepare_definitions(hash)
-  definitions = hash[:DEFINITIONS]
+  definitions = hash[:DEFINITIONS.to_s]
 
   definitions.each do |definition|
-    name = definition[:name]
+    name = definition[:name.to_s]
 
     has_no_name = (name.nil? || name.empty?)
-    argument_hashes = definition[:arguments]
+    argument_hashes = definition[:arguments.to_s]
 
     register_function_signature = "register"
-    register_function_signature << definition[:component_name]
+    register_function_signature << definition[:component_name.to_s]
     register_function_signature << "_#{name}" unless has_no_name
     register_function_signature << "(registerClosure: (resolver: ResolverType"
     register_function_signature << ", " unless (argument_hashes.nil? || argument_hashes.empty?)
-    register_function_signature << argument_hashes.map {|a| "#{a[:argument_name]}: #{a[:argument_type]}"}.join(", ") unless (argument_hashes.nil? || argument_hashes.empty?)
-    register_function_signature << ") -> (#{definition[:component]})) -> ServiceEntry<#{definition[:service]}>"
+    register_function_signature << argument_hashes.map {|a| "#{a[:argument_name.to_s]}: #{a[:argument_type.to_s]}"}.join(", ") unless (argument_hashes.nil? || argument_hashes.empty?)
+    register_function_signature << ") -> (#{definition[:component.to_s]})) -> ServiceEntry<#{definition[:service.to_s]}>"
 
     register_function_call = ".register("
-    register_function_call << "#{definition[:service]}.self,"
+    register_function_call << "#{definition[:service.to_s]}.self,"
     register_function_call << " name: \"#{name}\"," unless has_no_name
 
     resolve_function_signature = "resolve"
-    resolve_function_signature << definition[:component_name]
+    resolve_function_signature << definition[:component_name.to_s]
     resolve_function_signature << "_#{name}" unless has_no_name
     resolve_function_signature << "("
-    resolve_function_signature << argument_hashes.each_with_index.map {|a,i| "#{a[:argument_name] + ' ' if i==0}#{a[:argument_name]}: #{a[:argument_type]}"}.join(", ") unless (argument_hashes.nil? || argument_hashes.empty?)
-    resolve_function_signature << ") -> #{definition[:component]}"
+    resolve_function_signature << argument_hashes.each_with_index.map {|a,i| "#{a[:argument_name.to_s] + ' ' if i==0}#{a[:argument_name.to_s]}: #{a[:argument_type.to_s]}"}.join(", ") unless (argument_hashes.nil? || argument_hashes.empty?)
+    resolve_function_signature << ") -> #{definition[:component.to_s]}"
 
     resolve_function_call = ".resolve("
-    resolve_function_call << "#{definition[:service]}.self"
+    resolve_function_call << "#{definition[:service.to_s]}.self"
     resolve_function_call << ", name: \"#{name}\"" unless has_no_name
 
-    definition[:resolve_function_signature] = resolve_function_signature
-    definition[:resolve_function_call] = resolve_function_call
-    definition[:register_function_signature] = register_function_signature
-    definition[:register_function_call] = register_function_call
+    definition[:resolve_function_signature.to_s] = resolve_function_signature
+    definition[:resolve_function_call.to_s] = resolve_function_call
+    definition[:register_function_signature.to_s] = register_function_signature
+    definition[:register_function_call.to_s] = register_function_call
   end
 end
 
 def serialize_hash_to_CSV(hash, output_filename)
-  @content_array = hash[:DEFINITIONS]
-  @dependencies = hash[:DEPENDENCIES]
+  @content_array = hash[:DEFINITIONS.to_s]
+  @dependencies = hash[:DEPENDENCIES.to_s]
 
   code = ERB.new(File.read("#{templates_folder}/csv.erb"), nil, "-").result
 
