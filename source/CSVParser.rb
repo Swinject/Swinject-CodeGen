@@ -2,8 +2,8 @@ class CSVParser
 
   def parse_CSV(input_filename)
     result_hash = {
-      :DEPENDENCIES.to_s => [],
-      :DEFINITIONS.to_s => []
+      DEPENDENCIES: [],
+      DEFINITIONS: []
     }
 
     f = File.open(input_filename)
@@ -14,9 +14,9 @@ class CSVParser
       elsif line.start_with?("#")
         # detect command
         if(line.start_with?("#ADD_DEPENDENCY "))
-          result_hash[:DEPENDENCIES.to_s].push(line.split(" ")[1])
+          result_hash[:DEPENDENCIES].push(line.split(" ")[1])
         elsif(line.start_with?("# ADD_DEPENDENCY "))
-          result_hash[:DEPENDENCIES.to_s].push(line.split(" ")[2])
+          result_hash[:DEPENDENCIES].push(line.split(" ")[2])
         end
       elsif line.start_with?("//")
         # ignores comments
@@ -30,13 +30,13 @@ class CSVParser
             hash = nil
             if(a.include?(":"))
               hash = {
-                :argument_name.to_s => a.split(":").first.strip,
-                :argument_type.to_s => a.split(":").last.strip
+                argument_name: a.split(":").first.strip,
+                argument_type: a.split(":").last.strip
               }
             else
               hash = {
-                :argument_name.to_s => a.downcase,
-                :argument_type.to_s => a
+                argument_name: a.downcase,
+                argument_type: a
               }
             end
             hash
@@ -48,13 +48,13 @@ class CSVParser
         name = array[2]
 
         hash = {
-          :service.to_s => service,
-          :component.to_s => component,
-          :name.to_s => name,
-          :arguments.to_s => argument_hashes
+          service: service,
+          component: component,
+          name: name,
+          arguments: argument_hashes
         }
 
-        result_hash[:DEFINITIONS.to_s].push hash
+        result_hash[:DEFINITIONS].push hash
       end
     end
     return result_hash
