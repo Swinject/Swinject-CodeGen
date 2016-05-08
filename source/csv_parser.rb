@@ -1,6 +1,6 @@
+# responsible for parsing the csv files
 class CSVParser
-
-  def parse_CSV(input_filename)
+  def parse_csv(input_filename)
     result_hash = {
       DEPENDENCIES: [],
       DEFINITIONS: []
@@ -13,22 +13,22 @@ class CSVParser
         # ignores empty lines
       elsif line.start_with?("#")
         # detect command
-        if(line.start_with?("#ADD_DEPENDENCY "))
+        if line.start_with?("#ADD_DEPENDENCY ")
           result_hash[:DEPENDENCIES].push(line.split(" ")[1])
-        elsif(line.start_with?("# ADD_DEPENDENCY "))
+        elsif line.start_with?("# ADD_DEPENDENCY ")
           result_hash[:DEPENDENCIES].push(line.split(" ")[2])
         end
       elsif line.start_with?("//")
         # ignores comments
       else
-        array = line.split(";").map { |a| a.strip }
+        array = line.split(";").map(&:strip)
         arguments = array[3..-1]
         argument_hashes = nil
         unless arguments.nil?
-          arguments.reject { |a| a.empty? }
+          arguments.reject(&:empty?)
           argument_hashes = arguments.map do |a|
             hash = nil
-            if(a.include?(":"))
+            if a.include?(":")
               hash = {
                 argument_name: a.split(":").first.strip,
                 argument_type: a.split(":").last.strip
@@ -57,7 +57,6 @@ class CSVParser
         result_hash[:DEFINITIONS].push hash
       end
     end
-    return result_hash
+    result_hash
   end
-
 end

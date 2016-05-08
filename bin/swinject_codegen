@@ -2,9 +2,9 @@
 require "erb"
 require "Shellwords"
 require "optparse"
-require_relative "../source/CSVParser"
-require_relative "../source/YMLParser"
-require_relative "../source/YMLSerializer"
+require_relative "../source/csv_parser"
+require_relative "../source/yml_parser"
+require_relative "../source/yml_serializer"
 
 @options = {
   MIGRATION: false,
@@ -50,7 +50,7 @@ def main
     output_filename = @options[:OUTPUT_FILE]
 
     if input_filename.end_with?("csv")
-      YMLSerializer.new.serialize_hash_to_YML(definition_hash, output_filename)
+      YMLSerializer.new.serialize_hash_to_yml(definition_hash, output_filename)
     elsif input_filename.end_with?("yml")
       serialize_hash_to_CSV(definition_hash, output_filename)
     end
@@ -75,9 +75,9 @@ end
 
 def parse_input_file(input_filename)
   if input_filename.end_with?("csv")
-    return CSVParser.new.parse_CSV(input_filename)
+    return CSVParser.new.parse_csv(input_filename)
   elsif input_filename.end_with?("yml")
-    return YMLParser.new.parse_YML(input_filename)
+    return YMLParser.new.parse_yml(input_filename)
   else
     puts "unknown input format for file #{input_filename}"
     exit
@@ -92,17 +92,16 @@ def write_container_file(input_hash, output_filename)
   @content_array = input_hash[:DEFINITIONS]
   @dependencies = input_hash[:DEPENDENCIES]
 
-  code = ERB.new(File.read("#{templates_folder()}/container.erb"), nil, "-").result
+  code = ERB.new(File.read("#{templates_folder}/container.erb"), nil, "-").result
 
   if output_filename.nil?
     puts code
   else
-    File.open(output_filename, 'w') do |file_to_write_to|
+    File.open(output_filename, "w") do |file_to_write_to|
       file_to_write_to.puts code
       puts "Generated code in #{output_filename}"
     end
   end
-
 end
 
 def write_migration_file(input_hash, output_filename)
@@ -112,27 +111,26 @@ def write_migration_file(input_hash, output_filename)
     register_function_call_without_last_comma = definition[:register_function_call].reverse.sub(",", "").reverse
 
     migration_hash = {
-      resolve_function_signature_regex: Shellwords.escape(".#{definition[:resolve_function_signature].split("->").first.strip}"),
+      resolve_function_signature_regex: Shellwords.escape(".#{definition[:resolve_function_signature].split('->').first.strip}"),
       resolve_function_call: Shellwords.escape("#{definition[:resolve_function_call]})!"),
-      register_function_signature_regex: Shellwords.escape(".#{definition[:register_function_signature].split("(").first}"),
+      register_function_signature_regex: Shellwords.escape(".#{definition[:register_function_signature].split('(').first}"),
       register_function_call: Shellwords.escape("#{register_function_call_without_last_comma})")
     }
 
     @migration_array.push migration_hash
   end
 
-  migration_code = ERB.new(File.read("#{templates_folder()}/migration.erb"), nil, "-").result
+  migration_code = ERB.new(File.read("#{templates_folder}/migration.erb"), nil, "-").result
 
   if output_filename.nil?
     puts migration_code
   else
     migration_file_name = "#{output_filename}.migration.sh"
-    File.open(migration_file_name, 'w') do |file_to_write_to|
+    File.open(migration_file_name, "w") do |file_to_write_to|
       file_to_write_to.puts migration_code
       puts "Generated migration code in #{migration_file_name}"
     end
   end
-
 end
 
 def prepare_definitions(hash)
@@ -145,11 +143,11 @@ def prepare_definitions(hash)
     argument_hashes = definition[:arguments]
 
     register_function_signature = "register"
-    register_function_signature << definition[:component].gsub("<", "").gsub(">", "").gsub(".", "")
+    register_function_signature << definition[:component].delete("<").delete(">").delete(".")
     register_function_signature << "_#{name}" unless has_no_name
     register_function_signature << "(registerClosure: (resolver: ResolverType"
-    register_function_signature << ", " unless (argument_hashes.nil? || argument_hashes.empty?)
-    register_function_signature << argument_hashes.map {|a| "#{a[:argument_name]}: #{a[:argument_type]}"}.join(", ") unless (argument_hashes.nil? || argument_hashes.empty?)
+    register_function_signature << ", " unless argument_hashes.nil? || argument_hashes.empty?
+    register_function_signature << argument_hashes.map { |a| "#{a[:argument_name]}: #{a[:argument_type]}" }.join(", ") unless argument_hashes.nil? || argument_hashes.empty?
     register_function_signature << ") -> (#{definition[:component]})) -> ServiceEntry<#{definition[:service]}>"
 
     register_function_call = ".register("
@@ -157,10 +155,10 @@ def prepare_definitions(hash)
     register_function_call << " name: \"#{name}\"," unless has_no_name
 
     resolve_function_signature = "resolve"
-    resolve_function_signature << definition[:component].gsub("<", "").gsub(">", "").gsub(".", "")
+    resolve_function_signature << definition[:component].delete("<").delete(">").delete(".")
     resolve_function_signature << "_#{name}" unless has_no_name
     resolve_function_signature << "("
-    resolve_function_signature << argument_hashes.each_with_index.map {|a,i| "#{a[:argument_name] + ' ' if i==0}#{a[:argument_name]}: #{a[:argument_type]}"}.join(", ") unless (argument_hashes.nil? || argument_hashes.empty?)
+    resolve_function_signature << argument_hashes.each_with_index.map { |a, i| "#{a[:argument_name] + ' ' if i == 0}#{a[:argument_name]}: #{a[:argument_type]}" }.join(", ") unless argument_hashes.nil? || argument_hashes.empty?
     resolve_function_signature << ") -> #{definition[:component]}"
 
     resolve_function_call = ".resolve("
@@ -183,13 +181,10 @@ def serialize_hash_to_CSV(hash, output_filename)
   if output_filename.nil?
     puts code
   else
-    File.open(output_filename, 'w') do |file_to_write_to|
+    File.open(output_filename, "w") do |file_to_write_to|
       file_to_write_to.puts code
     end
   end
-
 end
 
-if __FILE__ == $0
-  main()
-end
+main if __FILE__ == $PROGRAM_NAME
