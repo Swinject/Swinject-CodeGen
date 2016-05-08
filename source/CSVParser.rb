@@ -45,13 +45,11 @@ class CSVParser
 
         service = array[0]
         component = array[1] || service
-        component_name = component.gsub("<", "").gsub(">", "").gsub(".", "")
         name = array[2]
 
         hash = {
           :service.to_s => service,
           :component.to_s => component,
-          :component_name.to_s => component_name,
           :name.to_s => name,
           :arguments.to_s => argument_hashes
         }

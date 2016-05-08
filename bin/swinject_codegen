@@ -145,7 +145,7 @@ def prepare_definitions(hash)
     argument_hashes = definition[:arguments.to_s]
 
     register_function_signature = "register"
-    register_function_signature << definition[:component_name.to_s]
+    register_function_signature << definition[:component.to_s].gsub("<", "").gsub(">", "").gsub(".", "")
     register_function_signature << "_#{name}" unless has_no_name
     register_function_signature << "(registerClosure: (resolver: ResolverType"
     register_function_signature << ", " unless (argument_hashes.nil? || argument_hashes.empty?)
@@ -157,7 +157,7 @@ def prepare_definitions(hash)
     register_function_call << " name: \"#{name}\"," unless has_no_name
 
     resolve_function_signature = "resolve"
-    resolve_function_signature << definition[:component_name.to_s]
+    resolve_function_signature << definition[:component.to_s].gsub("<", "").gsub(">", "").gsub(".", "")
     resolve_function_signature << "_#{name}" unless has_no_name
     resolve_function_signature << "("
     resolve_function_signature << argument_hashes.each_with_index.map {|a,i| "#{a[:argument_name.to_s] + ' ' if i==0}#{a[:argument_name.to_s]}: #{a[:argument_type.to_s]}"}.join(", ") unless (argument_hashes.nil? || argument_hashes.empty?)

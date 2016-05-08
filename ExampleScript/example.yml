@@ -4,26 +4,20 @@ DEPENDENCIES:
 DEFINITIONS:
 - service: PersonType
   component: InjectablePerson
-  component_name: InjectablePerson
   name: initializer
 - service: PersonType
   component: InjectablePerson
-  component_name: InjectablePerson
 - service: PersonType
   component: PersonType
-  component_name: PersonType
 - service: AnotherPersonType
   component: AnotherPersonType
-  component_name: AnotherPersonType
 - service: PersonType
   component: InjectablePerson
-  component_name: InjectablePerson
   arguments:
   - argument_name: argument_name
     argument_type: argument_type
 - service: PersonType
   component: InjectablePerson
-  component_name: InjectablePerson
   arguments:
   - argument_name: argument_name
     argument_type: argument_type
@@ -35,7 +29,6 @@ DEFINITIONS:
     argument_type: String
 - service: PersonType
   component: InjectablePerson
-  component_name: InjectablePerson
   name: initializer
   arguments:
   - argument_name: argument_name
