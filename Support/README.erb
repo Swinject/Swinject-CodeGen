@@ -29,7 +29,7 @@ to your podfile.
 2. Add a call to generate the code as build script phase:
 
 ```Shell
-$PODS_ROOT/Swinject-CodeGen/swinject_codegen -i baseInput.csv -o extensions/baseContainerExtension.swift
+$PODS_ROOT/Swinject-CodeGen/bin/swinject_codegen -i baseInput.csv -o extensions/baseContainerExtension.swift
 ```
 
 3. Add the generated file (here: `extensions/baseContainerExtension.swift`) to xcode
