@@ -6,3 +6,4 @@ gem "fastlane"
 
 require 'rubygems'
 gem 'minitest' # ensures you're using the gem, and not the built in MT
+gem 'minitest-reporters'

@@ -1,6 +1,9 @@
 require 'minitest/autorun'
+require 'minitest/reporters'
 
-class TestCodegeneration < MiniTest::Unit::TestCase
+reporter_options = { color: true }
+Minitest::Reporters.use! [Minitest::Reporters::DefaultReporter.new(reporter_options)]
+
   def buildCSV(fileName)
     %x(./../bin/swinject_codegen -i #{fileName}).chomp
   end

@@ -8,7 +8,9 @@ GEM
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
     addressable (2.4.0)
+    ansi (1.5.0)
     babosa (1.0.2)
+    builder (3.2.2)
     cert (1.4.1)
       fastlane_core (>= 0.29.1, < 1.0.0)
       spaceship (>= 0.22.0, < 1.0.0)
@@ -179,6 +181,11 @@ GEM
     mime-types-data (3.2016.0221)
     mini_magick (4.5.1)
     minitest (5.8.4)
+    minitest-reporters (1.1.9)
+      ansi
+      builder
+      minitest (>= 5.0)
+      ruby-progressbar
     molinillo (0.4.5)
     multi_json (1.12.0)
     multi_xml (0.5.5)
@@ -205,6 +212,7 @@ GEM
       uber (~> 0.0.7)
     retriable (2.1.0)
     rouge (1.10.1)
+    ruby-progressbar (1.8.0)
     rubyzip (1.1.7)
     scan (0.6.0)
       fastlane_core (>= 0.36.1, < 1.0.0)
@@ -271,6 +279,7 @@ DEPENDENCIES
   cocoapods (= 1.0.0.rc.1)
   fastlane
   minitest
+  minitest-reporters
 
 BUNDLED WITH
-   1.11.2
+   1.12.3
