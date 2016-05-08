@@ -112,10 +112,10 @@ def write_migration_file(input_hash, output_filename)
     register_function_call_without_last_comma = definition[:register_function_call].reverse.sub(",", "").reverse
 
     migration_hash = {
-      :resolve_function_signatureRegex => Shellwords.escape(".#{definition[:resolve_function_signature].split("->").first.strip}"),
-      :resolve_function_call => Shellwords.escape("#{definition[:resolve_function_call]})!"),
-      :register_function_signatureRegex => Shellwords.escape(".#{definition[:register_function_signature].split("(").first}"),
-      :register_function_call => Shellwords.escape("#{register_function_call_without_last_comma})")
+      :resolve_function_signature_regex => Shellwords.escape(".#{definition[:resolve_function_signature].split("->").first.strip}"),
+      :resolve_function_call.to_s => Shellwords.escape("#{definition[:resolve_function_call]})!"),
+      :register_function_signature_regex => Shellwords.escape(".#{definition[:register_function_signature].split("(").first}"),
+      :register_function_call.to_s => Shellwords.escape("#{register_function_call_without_last_comma})")
     }
 
     @migration_array.push migration_hash
