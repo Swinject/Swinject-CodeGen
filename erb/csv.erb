@@ -2,5 +2,5 @@
 # ADD_DEPENDENCY <%= dependency %>
 <% end -%>
 <% @content_array.each do |hash| -%>
-<%=hash[:base_class] unless hash[:base_class].nil? %>; <%= hash[:target_class] unless hash[:target_class].nil? %> ; <%= hash[:name] unless hash[:name].nil? %> ; <%= hash[:arguments].map {|a| "#{a[:argument_name]}: #{a[:argument_type]}"}.join("; ") unless hash[:arguments].nil? %>
+<%=hash[:service] unless hash[:service].nil? %>; <%= hash[:component] unless hash[:component].nil? %> ; <%= hash[:name] unless hash[:name].nil? %> ; <%= hash[:arguments].map {|a| "#{a[:argument_name]}: #{a[:argument_type]}"}.join("; ") unless hash[:arguments].nil? %>
 <% end -%>

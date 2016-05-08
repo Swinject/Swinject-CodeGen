@@ -43,15 +43,15 @@ class CSVParser
           end
         end
 
-        base_class = array[0]
-        target_class = array[1] || base_class
-        target_class_name = target_class.gsub("<", "").gsub(">", "").gsub(".", "")
+        service = array[0]
+        component = array[1] || service
+        component_name = component.gsub("<", "").gsub(">", "").gsub(".", "")
         name = array[2]
 
         hash = {
-          :base_class => base_class,
-          :target_class => target_class,
-          :target_class_name => target_class_name,
+          :service => service,
+          :component => component,
+          :component_name => component_name,
           :name => name,
           :arguments => argument_hashes
         }

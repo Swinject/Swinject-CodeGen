@@ -145,26 +145,26 @@ def prepare_definitions(hash)
     argument_hashes = definition[:arguments]
 
     register_function_signature = "register"
-    register_function_signature << definition[:target_class_name]
+    register_function_signature << definition[:component_name]
     register_function_signature << "_#{name}" unless has_no_name
     register_function_signature << "(registerClosure: (resolver: ResolverType"
     register_function_signature << ", " unless (argument_hashes.nil? || argument_hashes.empty?)
     register_function_signature << argument_hashes.map {|a| "#{a[:argument_name]}: #{a[:argument_type]}"}.join(", ") unless (argument_hashes.nil? || argument_hashes.empty?)
-    register_function_signature << ") -> (#{definition[:target_class]})) -> ServiceEntry<#{definition[:base_class]}>"
+    register_function_signature << ") -> (#{definition[:component]})) -> ServiceEntry<#{definition[:service]}>"
 
     register_function_call = ".register("
-    register_function_call << "#{definition[:base_class]}.self,"
+    register_function_call << "#{definition[:service]}.self,"
     register_function_call << " name: \"#{name}\"," unless has_no_name
 
     resolve_function_signature = "resolve"
-    resolve_function_signature << definition[:target_class_name]
+    resolve_function_signature << definition[:component_name]
     resolve_function_signature << "_#{name}" unless has_no_name
     resolve_function_signature << "("
     resolve_function_signature << argument_hashes.each_with_index.map {|a,i| "#{a[:argument_name] + ' ' if i==0}#{a[:argument_name]}: #{a[:argument_type]}"}.join(", ") unless (argument_hashes.nil? || argument_hashes.empty?)
-    resolve_function_signature << ") -> #{definition[:target_class]}"
+    resolve_function_signature << ") -> #{definition[:component]}"
 
     resolve_function_call = ".resolve("
-    resolve_function_call << "#{definition[:base_class]}.self"
+    resolve_function_call << "#{definition[:service]}.self"
     resolve_function_call << ", name: \"#{name}\"" unless has_no_name
 
     definition[:resolve_function_signature] = resolve_function_signature
