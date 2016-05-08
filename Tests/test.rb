@@ -2,7 +2,7 @@ require 'minitest/autorun'
 
 class TestCodegeneration < MiniTest::Unit::TestCase
   def buildCSV(fileName)
-    %x(./../codegen/swinject_codegen -i #{fileName}).chomp
+    %x(./../bin/swinject_codegen -i #{fileName}).chomp
   end
 
   def readFile(fileName)

@@ -29,7 +29,7 @@ to your podfile.
 2. Add a call to generate the code as build script phase:
 
 ```Shell
-$PODS_ROOT/Swinject-CodeGen/swinject_codegen -i baseInput.csv -o extensions/baseContainerExtension.swift
+$PODS_ROOT/Swinject-CodeGen/bin/swinject_codegen -i baseInput.csv -o extensions/baseContainerExtension.swift
 ```
 
 3. Add the generated file (here: `extensions/baseContainerExtension.swift`) to xcode
@@ -120,7 +120,7 @@ Example for a .yml definition:
 
 #### Output
 ```Swift
-<%= %x(./../codegen/swinject_codegen -i ../Tests/Examples/ExampleA.csv).chomp %>
+<%= %x(./../bin/swinject_codegen -i ../Tests/Examples/ExampleA.csv).chomp %>
 ```
 
 ### Example B: Different source and target
@@ -132,7 +132,7 @@ Example for a .yml definition:
 
 #### Output
 ```Swift
-<%= %x(./../codegen/swinject_codegen -i ../Tests/Examples/ExampleB.csv).chomp %>
+<%= %x(./../bin/swinject_codegen -i ../Tests/Examples/ExampleB.csv).chomp %>
 ```
 
 ### Example C: Different source and target class with name
@@ -144,7 +144,7 @@ Example for a .yml definition:
 
 #### Output
 ```Swift
-<%= %x(./../codegen/swinject_codegen -i ../Tests/Examples/ExampleC.csv).chomp %>
+<%= %x(./../bin/swinject_codegen -i ../Tests/Examples/ExampleC.csv).chomp %>
 ```
 
 ### Example D: Different source and target with a single, explicitly named argument
@@ -155,7 +155,7 @@ Example for a .yml definition:
 
 #### Output
 ```Swift
-<%= %x(./../codegen/swinject_codegen -i ../Tests/Examples/ExampleD.csv).chomp %>
+<%= %x(./../bin/swinject_codegen -i ../Tests/Examples/ExampleD.csv).chomp %>
 ```
 
 ### Example E: Different source and target with multiple arguments, both explicitly named and not
@@ -168,7 +168,7 @@ If no explicit name is given, the lowercase type is used as argumentname.
 
 #### Output
 ```Swift
-<%= %x(./../codegen/swinject_codegen -i ../Tests/Examples/ExampleE.csv).chomp %>
+<%= %x(./../bin/swinject_codegen -i ../Tests/Examples/ExampleE.csv).chomp %>
 ```
 
 ### Example F:  Different source and target with name with multiple arguments, both explicitly named and not
@@ -179,7 +179,7 @@ If no explicit name is given, the lowercase type is used as argumentname.
 
 #### Output
 ```Swift
-<%= %x(./../codegen/swinject_codegen -i ../Tests/Examples/ExampleF.csv).chomp %>
+<%= %x(./../bin/swinject_codegen -i ../Tests/Examples/ExampleF.csv).chomp %>
 ```
 
 ## Usage Examples

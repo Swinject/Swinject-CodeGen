@@ -2,9 +2,9 @@
 require "erb"
 require "Shellwords"
 require "optparse"
-require_relative "./CSVParser"
-require_relative "./YMLParser"
-require_relative "./YMLSerializer"
+require_relative "../source/CSVParser"
+require_relative "../source/YMLParser"
+require_relative "../source/YMLSerializer"
 
 @options = {
   :MIGRATION  => false,
@@ -85,7 +85,7 @@ def parse_input_file(input_filename)
 end
 
 def templates_folder
-  File.expand_path(File.dirname(__FILE__))
+  "#{File.expand_path(File.dirname(__FILE__))}/../erb"
 end
 
 def write_container_file(input_hash, output_filename)
