@@ -12,8 +12,6 @@ Doing this, we also can generate typed tuples to use when resolving, thus allowi
 
 ## Installation
 
-We aim to support carthage in the near future
-
 ### Cocoapods
 
 Add
@@ -24,13 +22,30 @@ pod 'Swinject-CodeGen',  :git => 'https://github.com/Swinject/Swinject-CodeGener
 
 to your podfile.
 
+### Carthage
+
+Add
+
+```
+github "Swinject/Swinject-CodeGeneration" 
+```
+
+to your Cartfile.
+
 ## Integration
 1. Define your dependencies in a .csv or .yml file (see below and example file)
 2. Add a call to generate the code as build script phase:
 
+For Cocoapods:
 ```Shell
 $PODS_ROOT/Swinject-CodeGen/bin/swinject_codegen -i baseInput.csv -o extensions/baseContainerExtension.swift
 ```
+
+For Carthage:
+```Shell
+$SRCROOT/Carthage/Checkouts/Swinject-CodeGen/bin/swinject_codegen -i baseInput.csv -o extensions/baseContainerExtension.swift
+```
+
 
 3. Add the generated file (here: `extensions/baseContainerExtension.swift`) to xcode
 4. Repeat if you need to support multiple targets/have multiple input files.
