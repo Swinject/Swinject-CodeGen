@@ -114,7 +114,7 @@ We decided to use `;` as delimiter instead of `,` to allow the use of tuples as 
 #### Additional Commands
 The ruby parser allows using  `//` and `#` for comments.
 Empty lines are ignored and can be used for grouping.
-`#ADD_DEPENDENCY <dependency>` and `# ADD_DEPENDENCY <dependency>` can be used to specify dependencies, e.g. `import KeychainAccess`
+`#= <header>` can be used to specify additional headers, e.g. `#= import KeychainAccess`
 
 ### YML
 

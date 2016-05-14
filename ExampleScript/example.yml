@@ -1,6 +1,6 @@
 ---
-DEPENDENCIES:
-  - ADependency
+HEADERS:
+  - import ADependency
 DEFINITIONS:
 - service: PersonType
   component: InjectablePerson

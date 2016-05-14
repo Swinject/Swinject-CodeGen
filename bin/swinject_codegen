@@ -90,7 +90,7 @@ end
 
 def write_container_file(input_hash, output_filename)
   @content_array = input_hash[:DEFINITIONS]
-  @dependencies = input_hash[:DEPENDENCIES]
+  @headers = input_hash[:HEADERS]
 
   code = ERB.new(File.read("#{templates_folder}/container.erb"), nil, "-").result
 
@@ -174,7 +174,7 @@ end
 
 def serialize_hash_to_CSV(hash, output_filename)
   @content_array = hash[:DEFINITIONS]
-  @dependencies = hash[:DEPENDENCIES]
+  @headers = hash[:HEADERS]
 
   code = ERB.new(File.read("#{templates_folder}/csv.erb"), nil, "-").result
 
