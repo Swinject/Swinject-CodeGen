@@ -116,6 +116,13 @@ The ruby parser allows using  `//` and `#` for comments.
 Empty lines are ignored and can be used for grouping.
 `#= <header>` can be used to specify additional headers, e.g. `#= import KeychainAccess`
 
+#### Dictionaries and Arrays as Parameters
+When using typed dictionaries or arrays as parameters, use `Array<Type>` instead of `[Type]` and `Dictionary<TypeA, TypeB>` instead of `[TypeA:TypeB]`:
+
+```CSV
+PersonType; InjectablePerson; initializer; additionalNames:Array<String>; family:Dictionary<String, String>;
+```
+
 ### YML
 
 Example for a .yml definition:
