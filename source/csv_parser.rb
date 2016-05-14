@@ -23,6 +23,7 @@ class CSVParser
       else
         array = line.split(";").map(&:strip)
         arguments = array[3..-1]
+        arguments = arguments.reject { |a| a.empty? } unless arguments.nil?
         argument_hashes = nil
         unless arguments.nil?
           arguments.reject(&:empty?)
