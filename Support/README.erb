@@ -13,7 +13,7 @@ Doing this, we also can generate typed tuples to use when resolving, thus allowi
 Add
 
 ```
-pod 'Swinject-CodeGen',  :git => 'https://github.com/Swinject/Swinject-CodeGeneration.git'
+pod 'Swinject-CodeGen'
 ```
 
 to your podfile.
