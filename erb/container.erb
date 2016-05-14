@@ -8,16 +8,16 @@ import Swinject
 
 extension Resolvable {
 <% @content_array.each do |hash| %>
-    func <%= hash[:resolve_function_signature.to_s] %> {
-        return self<%= hash[:resolve_function_call.to_s] %><%= ", argument: #{hash[:arguments.to_s][0][:argument_name.to_s]}" if !hash[:arguments.to_s].nil? && hash[:arguments.to_s].count == 1 -%><%= ", arguments: (#{hash[:arguments.to_s].map {|a| a[:argument_name.to_s]}.join(', ')})" if !hash[:arguments.to_s].nil? && hash[:arguments.to_s].count > 1 -%>)<%=hash[:service.to_s] != hash[:component.to_s] ? " as! #{hash[:component.to_s]}" : "!"%>
+    func <%= hash[:resolve_function_signature] %> {
+        return self<%= hash[:resolve_function_call] %><%= ", argument: #{hash[:arguments][0][:argument_name]}" if !hash[:arguments].nil? && hash[:arguments].count == 1 -%><%= ", arguments: (#{hash[:arguments].map {|a| a[:argument_name]}.join(", ")})" if !hash[:arguments].nil? && hash[:arguments].count > 1 -%>)<%=hash[:service] != hash[:component] ? " as! #{hash[:component]}" : "!"%>
     }
 <% end -%>
 }
 
 extension Container {
 <% @content_array.each do |hash| %>
-    func <%= hash[:register_function_signature.to_s] %> {
-        return self<%= hash[:register_function_call.to_s] %> factory: registerClosure)
+    func <%= hash[:register_function_signature] %> {
+        return self<%= hash[:register_function_call] %> factory: registerClosure)
     }
 <% end -%>
 }

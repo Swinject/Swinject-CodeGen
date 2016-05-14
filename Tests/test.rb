@@ -1,39 +1,47 @@
-require 'minitest/autorun'
+require "minitest/autorun"
+require "minitest/reporters"
 
-class TestCodegeneration < MiniTest::Unit::TestCase
-  def buildCSV(fileName)
-    %x(./../bin/swinject_codegen -i #{fileName}).chomp
+reporter_options = { color: true }
+default_reporter = Minitest::Reporters::DefaultReporter.new(reporter_options)
+Minitest::Reporters.use! [default_reporter]
+
+# code generation tests
+class TestCodegeneration < Minitest::Test
+  def build_csv(file_name)
+    `./../bin/swinject_codegen -i #{file_name}`.chomp
   end
 
-  def readFile(fileName)
-    File.read(fileName).chomp
+  def read_file(file_name)
+    File.read(file_name).chomp
   end
 
-  def runTest(baseFileName)
-    assert_equal buildCSV("Examples/#{baseFileName}.csv"), readFile("ExpectedCode/#{baseFileName}.swift")
+  def run_test(base_file_name)
+    output = build_csv("Examples/#{base_file_name}.csv")
+    example = read_file("ExpectedCode/#{base_file_name}.swift")
+    assert_equal output, example
   end
 
   def test_example_a
-    runTest("ExampleA")
+    run_test("ExampleA")
   end
 
   def test_example_b
-    runTest("ExampleB")
+    run_test("ExampleB")
   end
 
   def test_example_c
-    runTest("ExampleC")
+    run_test("ExampleC")
   end
 
   def test_example_d
-    runTest("ExampleD")
+    run_test("ExampleD")
   end
 
   def test_example_e
-    runTest("ExampleE")
+    run_test("ExampleE")
   end
 
   def test_example_f
-    runTest("ExampleF")
+    run_test("ExampleF")
   end
 end
