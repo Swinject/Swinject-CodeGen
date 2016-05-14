@@ -44,4 +44,10 @@ class TestCodegeneration < Minitest::Test
   def test_example_f
     run_test("ExampleF")
   end
+
+  def test_Bug_51
+    outputA = build_csv("Examples/Bug_51_A.csv")
+    outputB = build_csv("Examples/Bug_51_B.csv")
+    assert_equal outputA, outputB
+  end
 end

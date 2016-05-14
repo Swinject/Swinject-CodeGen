@@ -138,6 +138,7 @@ def prepare_definitions(hash)
 
   definitions.each do |definition|
     name = definition[:name]
+    name = name.gsub(/[^0-9a-zA-Z]/i, '_') unless name.nil?
 
     has_no_name = (name.nil? || name.empty?)
     argument_hashes = definition[:arguments]
