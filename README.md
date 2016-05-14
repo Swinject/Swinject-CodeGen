@@ -2,18 +2,12 @@
 
 [![Build Status](https://travis-ci.org/Swinject/Swinject-CodeGen.svg?branch=master)](https://travis-ci.org/Swinject/Swinject-CodeGen)
 
-I would call it a very elaborated proof of concept, though we use it in production atm.
-We are open for every kind of feedback, improvements of the generated code/templates, discussion of the input format etc.
-
 ## TLDR;
 
-We propose a method to get rid of duplicate use of class values and namestrings, by generating explicit functions for registering and resolving.
+Swinject-CodeGen provides a method to get rid of duplicate use of class values and namestrings, by generating explicit functions for registering and resolving using Swinject.
 Doing this, we also can generate typed tuples to use when resolving, thus allowing better documented and less error-prone code.
 
 ## Installation
-
-We aim to support carthage in the near future
-
 ### Cocoapods
 
 Add
@@ -24,12 +18,28 @@ pod 'Swinject-CodeGen',  :git => 'https://github.com/Swinject/Swinject-CodeGener
 
 to your podfile.
 
+### Carthage
+
+Add
+
+```
+github "Swinject/Swinject-CodeGeneration"
+```
+
+to your Cartfile.
+
 ## Integration
 1. Define your dependencies in a .csv or .yml file (see below and example file)
 2. Add a call to generate the code as build script phase:
 
+For Cocoapods:
 ```Shell
 $PODS_ROOT/Swinject-CodeGen/bin/swinject_codegen -i baseInput.csv -o extensions/baseContainerExtension.swift
+```
+
+For Carthage:
+```Shell
+$SRCROOT/Carthage/Checkouts/Swinject-CodeGen/bin/swinject_codegen -i baseInput.csv -o extensions/baseContainerExtension.swift
 ```
 
 3. Add the generated file (here: `extensions/baseContainerExtension.swift`) to xcode
@@ -39,9 +49,7 @@ The code is then generated at every build run.
 
 ## The Issue
 
-We love using swinject for dependency injection.
-However, we would like to stay to the DRY principle and really love types.
-When using swinject, lots of duplicate definitions appear, whenever we do a
+When using Swinject, lots of duplicate definitions appear, whenever we do a
 
 ```Swift
 container.register(PersonType.self, name: "initializer") { r in
@@ -99,7 +107,15 @@ We decided to use `;` as delimiter instead of `,` to allow the use of tuples as 
 #### Additional Commands
 The ruby parser allows using  `//` and `#` for comments.
 Empty lines are ignored and can be used for grouping.
-`#= <header>` can be used to specify additional headers, e.g. `#ADD_HEADER import KeychainAccess`
+
+`#= <header>` can be used to specify additional lines, e.g. `#= import KeychainAccess`
+
+#### Dictionaries and Arrays as Parameters
+When using typed dictionaries or arrays as parameters, use `Array<Type>` instead of `[Type]` and `Dictionary<TypeA, TypeB>` instead of `[TypeA:TypeB]`:
+
+```CSV
+PersonType; InjectablePerson; initializer; additionalNames:Array<String>; family:Dictionary<String, String>;
+```
 
 ### YML
 
@@ -356,31 +372,18 @@ container.registerAnimalType { (_, name:String) in
 let horse1 = container.resolveAnimalType("Spirit")
 ```
 
-We can provide more examples if desired.
-
-## Integration
-
-The Integration is currently done by calling the following code in a very early (i.e. before compilation) build phase:
-```SH
-cd ${SRCROOT}/CodeGeneration/
-swinject_codegen -i baseInput.csv -o extensions/baseContainerExtension.swift
-swinject_codegen -i iosInput.csv -o extensions/iosContainerExtension.swift
-swinject_codegen -i tvosInput.csv -o extensions/tvosContainerExtension.swift
-```
-
-The resulting extension files are added to xcode and given appropriate target settings.
-
 ## Migration
 The script also generates migration.sh files (when using the -m switch), which use sed to go through the code and replace simple cases (i.e. no arguments) of resolve and register.
 No automatic migration is available for cases with arguments, yet.
 Simply call the .sh file from the root of the project and compare the results in a git-GUI.
 
 ## Results
-We currently use the code generation in a medium-sized app, with a total of ~130 lines of definitions across 3 .csv files (shared definitions, iOS only, tvOS only).
-We found our code to become much more convenient to read and write, due to reduced duplication and autocompletion. We also have a much better overview the classes available through dependency injection.
+We currently use the code generation in two medium-sized apps across tvOS and iOS.
+
+We found our code to become much more convenient to read and write, due to reduced duplication and autocompletion.
+We also have a much better overview the classes available through dependency injection.
 Changing some definition immediately leads to information, where an error will occur.
 We were able to replace all our occurences of `.resolve(` and `.register(` using the current implementation.
 
-
 ## Contributors
-The main contributors for this are [Daniel Dengler](https://github.com/ddengler), [David Kraus](https://github.com/davidkraus) and [Wolfgang Lutz](https://github.com/lutzifer).
+The original idea for combining CodeGeneration and Swinject came from [Daniel Dengler](https://github.com/ddengler), [David Kraus](https://github.com/davidkraus) and [Wolfgang Lutz](https://github.com/lutzifer).
