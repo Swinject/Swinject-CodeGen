@@ -13,10 +13,8 @@ class CSVParser
         # ignores empty lines
       elsif line.start_with?("#")
         # detect command
-        if(line.start_with?("#ADD_HEADER "))
+        if(line.start_with?("#= "))
           result_hash[:HEADERS.to_s].push(line.split(" ")[1..-1].join(" "))
-        elsif(line.start_with?("# ADD_HEADER "))
-          result_hash[:HEADERS.to_s].push(line.split(" ")[2..-1].join(" "))
         end
       elsif line.start_with?("//")
         # ignores comments
