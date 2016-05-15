@@ -2,8 +2,6 @@
 
 [![Build Status](https://travis-ci.org/Swinject/Swinject-CodeGen.svg?branch=master)](https://travis-ci.org/Swinject/Swinject-CodeGen)
 
-## TLDR;
-
 Swinject-CodeGen provides a method to get rid of duplicate use of class values and namestrings, by generating explicit functions for registering and resolving using Swinject.
 Doing this, we also can generate typed tuples to use when resolving, thus allowing better documented and less error-prone code.
 
