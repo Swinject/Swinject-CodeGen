@@ -43,7 +43,7 @@ class CSVParser
         end
 
         service = array[0]
-        component = array[1] || service
+        component = (!array[1].nil? && !array[1].empty?) ? array[1] : service
         name = array[2]
 
         hash = {
