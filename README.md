@@ -115,7 +115,7 @@ When using typed dictionaries or arrays as parameters, use `Array<Type>` instead
 PersonType; InjectablePerson; initializer; additionalNames:Array<String>; family:Dictionary<String, String>;
 ```
 
-### YML
+### YAML
 
 Example for a .yml definition:
 ```yml
