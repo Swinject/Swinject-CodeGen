@@ -146,7 +146,7 @@ def prepare_definitions(hash)
     register_function_signature = "register"
     register_function_signature << definition[:component].delete("<").delete(">").delete(".")
     register_function_signature << "_#{name}" unless has_no_name
-    register_function_signature << "(registerClosure: (resolver: ResolverType"
+    register_function_signature << "(registerClosure: (_ resolver: ResolverType"
     register_function_signature << ", " unless argument_hashes.nil? || argument_hashes.empty?
     register_function_signature << argument_hashes.map { |a| "#{a[:argument_name]}: #{a[:argument_type]}" }.join(", ") unless argument_hashes.nil? || argument_hashes.empty?
     register_function_signature << ") -> (#{definition[:component]})) -> ServiceEntry<#{definition[:service]}>"

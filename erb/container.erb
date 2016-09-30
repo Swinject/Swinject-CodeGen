@@ -6,7 +6,7 @@ import Swinject
 <%= header %>
 <% end -%>
 
-extension Resolvable {
+extension ResolverType {
 <% @content_array.each do |hash| %>
     func <%= hash[:resolve_function_signature] %> {
         return self<%= hash[:resolve_function_call] %><%= ", argument: #{hash[:arguments][0][:argument_name]}" if !hash[:arguments].nil? && hash[:arguments].count == 1 -%><%= ", arguments: (#{hash[:arguments].map {|a| a[:argument_name]}.join(", ")})" if !hash[:arguments].nil? && hash[:arguments].count > 1 -%>)<%=hash[:service] != hash[:component] ? " as! #{hash[:component]}" : "!"%>
