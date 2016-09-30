@@ -13,7 +13,7 @@ class InjectablePerson: PersonType {
         log = "Injected by initializer."
     }
 
-    func setPet(pet: AnimalType) {
+    func setPet(_ pet: AnimalType) {
         self.pet = pet
         log = "Injected by method."
     }
