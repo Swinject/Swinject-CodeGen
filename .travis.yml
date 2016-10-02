@@ -7,7 +7,7 @@ install:
   - gem install bundler
   - export PATH="$PWD/bin:$PATH"
   - bundle install
-  - pod setup
+  - pod setup  > /dev/null
   - pod install --project-directory=ExampleProject/CodeGenerationExample
 script:
   - ruby -X Tests test.rb
