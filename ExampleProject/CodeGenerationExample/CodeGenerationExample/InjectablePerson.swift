@@ -1,4 +1,4 @@
-class InjectablePerson: PersonType {
+public class InjectablePerson: PersonType {
     var pet: AnimalType? {
         didSet {
             log = "Injected by property."
@@ -18,7 +18,7 @@ class InjectablePerson: PersonType {
         log = "Injected by method."
     }
 
-    func play() -> String {
+    public func play() -> String {
         return log
     }
 }
