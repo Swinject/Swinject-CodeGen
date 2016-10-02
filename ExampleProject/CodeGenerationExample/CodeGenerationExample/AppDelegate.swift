@@ -13,27 +13,27 @@ let appModule = Container() {
     container in
 
     // container.register(AnimalType.self) { _ in Cat(name: "Mimi") }
-    container.registerCat { _ in Cat(name: "Mimi") }
+    _ = container.registerCat { _ in Cat(name: "Mimi") }
 
     // container.register(PersonType.self) { r in PetOwner(pet: r.resolve(AnimalType.self)!) }
-    container.registerPersonType { r in PetOwner(pet: r.resolve(AnimalType.self)!) }
+    _ = container.registerPersonType { r in PetOwner(pet: r.resolve(AnimalType.self)!) }
 
     // container.register(AnimalType.self, name: "dog") { _ in Dog(name: "Hachi") }
-    container.registerAnimalType_dog { _ in Dog(name: "Hachi") }
+    _ = container.registerAnimalType_dog { _ in Dog(name: "Hachi") }
 
     // container.register(PersonType.self, name: "doggy") { r in PetOwner(pet: r.resolve(AnimalType.self, name: "dog")!) }
-    container.registerPersonType_doggy { r in PetOwner(pet: r.resolve(AnimalType.self, name: "dog")!) }
+    _ = container.registerPersonType_doggy { r in PetOwner(pet: r.resolve(AnimalType.self, name: "dog")!) }
 
     // container.register(AnimalType.self, name: "cb") { _ in Cat(name: "Mew") }
-    container.registerAnimalType_cb { _ in Cat(name: "Mew") }
+    _ = container.registerAnimalType_cb { _ in Cat(name: "Mew") }
 
     // container.register(PersonType.self, name: "initializer") { r in
-    container.registerPersonType_initializer { r in
+    _ = container.registerPersonType_initializer { r in
         InjectablePerson(pet: r.resolve(AnimalType.self)!)
     }
 
     // container.register(PersonType.self, name: "property1") { r in
-    container.registerPersonType_property1 { r in
+    _ = container.registerPersonType_property1 { r in
         let person = InjectablePerson()
         person.pet = r.resolve(AnimalType.self)
         return person
@@ -46,7 +46,7 @@ let appModule = Container() {
     }
 
     //  container.register(PersonType.self, name: "method1") { r in
-    container.registerPersonType_method1 { r in
+    _ = container.registerPersonType_method1 { r in
         let person = InjectablePerson()
         person.setPet(r.resolve(AnimalType.self)!)
         return person
@@ -60,14 +60,14 @@ let appModule = Container() {
     }
 
     // container.register(AnimalType.self) { _, name in Horse(name: name) }
-    container.registerHorse { _, name in Horse(name: name) }
+    _ = container.registerHorse { _, name in Horse(name: name) }
 
     // container.register(AnimalType.self) { _, name, running in Horse(name: name, running: running) }
-    container.registerHorse { _, name, running in Horse(name: name, running: running) }
+    _ = container.registerHorse { _, name, running in Horse(name: name, running: running) }
 
     // container.register(AnimalType.self) { _ in Turtle(name: "Reo") }
     container.registerTurtle { _ in Turtle(name: "Reo") }
-        .inObjectScope(.Container)
+        .inObjectScope(.container)
 
 
 }
