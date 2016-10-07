@@ -16,7 +16,7 @@ extension ResolverType {
 
 extension Container {
 <% @content_array.each do |hash| %>
-    public func <%= hash[:register_function_signature] %> {
+    @discardableResult public func <%= hash[:register_function_signature] %> {
         return self<%= hash[:register_function_call] %> factory: registerClosure)
     }
 <% end -%>
