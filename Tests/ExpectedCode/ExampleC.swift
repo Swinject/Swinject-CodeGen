@@ -4,14 +4,14 @@ import Swinject
 
 extension ResolverType {
 
-    public func resolveInjectablePerson_initializer() -> InjectablePerson {
+    func resolveInjectablePerson_initializer() -> InjectablePerson {
         return self.resolve(PersonType.self, name: "initializer") as! InjectablePerson
     }
 }
 
 extension Container {
 
-    @discardableResult public func registerInjectablePerson_initializer(registerClosure: (_ resolver: ResolverType) -> (InjectablePerson)) -> ServiceEntry<PersonType> {
+    @discardableResult func registerInjectablePerson_initializer(registerClosure: (_ resolver: ResolverType) -> (InjectablePerson)) -> ServiceEntry<PersonType> {
         return self.register(PersonType.self, name: "initializer", factory: registerClosure)
     }
 }
