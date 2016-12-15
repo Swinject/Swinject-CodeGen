@@ -1,13 +1,10 @@
 language: objective-c
-osx_image: xcode8.0
+osx_image: xcode8.1
 branches:
   only:
     - master
 install:
-  - gem install bundler
-  - export PATH="$PWD/bin:$PATH"
   - bundle install
-  - pod setup  > /dev/null
   - pod install --project-directory=ExampleProject/CodeGenerationExample
 script:
   - ruby -X Tests test.rb
