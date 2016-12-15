@@ -115,7 +115,7 @@ When using typed dictionaries or arrays as parameters, use `Array<Type>` instead
 PersonType; InjectablePerson; initializer; additionalNames:Array<String>; family:Dictionary<String, String>;
 ```
 
-### YML
+### YAML
 
 Example for a .yml definition:
 ```yml
@@ -178,16 +178,16 @@ PersonType
 
 import Swinject
 
-extension ResolverType {
+extension Resolver {
 
-    public func resolvePersonType() -> PersonType {
+    func resolvePersonType() -> PersonType {
         return self.resolve(PersonType.self)!
     }
 }
 
 extension Container {
 
-    public func registerPersonType(registerClosure: (_ resolver: ResolverType) -> (PersonType)) -> ServiceEntry<PersonType> {
+    @discardableResult func registerPersonType(registerClosure: @escaping (_ resolver: Resolver) -> (PersonType)) -> ServiceEntry<PersonType> {
         return self.register(PersonType.self, factory: registerClosure)
     }
 }
@@ -206,16 +206,16 @@ PersonType; InjectablePerson
 
 import Swinject
 
-extension ResolverType {
+extension Resolver {
 
-    public func resolveInjectablePerson() -> InjectablePerson {
+    func resolveInjectablePerson() -> InjectablePerson {
         return self.resolve(PersonType.self) as! InjectablePerson
     }
 }
 
 extension Container {
 
-    public func registerInjectablePerson(registerClosure: (_ resolver: ResolverType) -> (InjectablePerson)) -> ServiceEntry<PersonType> {
+    @discardableResult func registerInjectablePerson(registerClosure: @escaping (_ resolver: Resolver) -> (InjectablePerson)) -> ServiceEntry<PersonType> {
         return self.register(PersonType.self, factory: registerClosure)
     }
 }
@@ -234,16 +234,16 @@ PersonType; InjectablePerson; initializer
 
 import Swinject
 
-extension ResolverType {
+extension Resolver {
 
-    public func resolveInjectablePerson_initializer() -> InjectablePerson {
+    func resolveInjectablePerson_initializer() -> InjectablePerson {
         return self.resolve(PersonType.self, name: "initializer") as! InjectablePerson
     }
 }
 
 extension Container {
 
-    public func registerInjectablePerson_initializer(registerClosure: (_ resolver: ResolverType) -> (InjectablePerson)) -> ServiceEntry<PersonType> {
+    @discardableResult func registerInjectablePerson_initializer(registerClosure: @escaping (_ resolver: Resolver) -> (InjectablePerson)) -> ServiceEntry<PersonType> {
         return self.register(PersonType.self, name: "initializer", factory: registerClosure)
     }
 }
@@ -261,16 +261,16 @@ PersonType; InjectablePerson; ; argumentName:ArgumentType
 
 import Swinject
 
-extension ResolverType {
+extension Resolver {
 
-    public func resolveInjectablePerson(argumentName: ArgumentType) -> InjectablePerson {
+    func resolveInjectablePerson(argumentName: ArgumentType) -> InjectablePerson {
         return self.resolve(PersonType.self, argument: argumentName) as! InjectablePerson
     }
 }
 
 extension Container {
 
-    public func registerInjectablePerson(registerClosure: (_ resolver: ResolverType, _ argumentName: ArgumentType) -> (InjectablePerson)) -> ServiceEntry<PersonType> {
+    @discardableResult func registerInjectablePerson(registerClosure: @escaping (_ resolver: Resolver, _ argumentName: ArgumentType) -> (InjectablePerson)) -> ServiceEntry<PersonType> {
         return self.register(PersonType.self, factory: registerClosure)
     }
 }
@@ -290,16 +290,16 @@ PersonType; InjectablePerson; ; argumentName:ArgumentType; ArgumentTypeWithoutSp
 
 import Swinject
 
-extension ResolverType {
+extension Resolver {
 
-    public func resolveInjectablePerson(argumentName: ArgumentType, argumenttypewithoutspecificname: ArgumentTypeWithoutSpecificName, title: String, string: String) -> InjectablePerson {
+    func resolveInjectablePerson(argumentName: ArgumentType, argumenttypewithoutspecificname: ArgumentTypeWithoutSpecificName, title: String, string: String) -> InjectablePerson {
         return self.resolve(PersonType.self, arguments: argumentName, argumenttypewithoutspecificname, title, string) as! InjectablePerson
     }
 }
 
 extension Container {
 
-    public func registerInjectablePerson(registerClosure: (_ resolver: ResolverType, _ argumentName: ArgumentType, _ argumenttypewithoutspecificname: ArgumentTypeWithoutSpecificName, _ title: String, _ string: String) -> (InjectablePerson)) -> ServiceEntry<PersonType> {
+    @discardableResult func registerInjectablePerson(registerClosure: @escaping (_ resolver: Resolver, _ argumentName: ArgumentType, _ argumenttypewithoutspecificname: ArgumentTypeWithoutSpecificName, _ title: String, _ string: String) -> (InjectablePerson)) -> ServiceEntry<PersonType> {
         return self.register(PersonType.self, factory: registerClosure)
     }
 }
@@ -317,16 +317,16 @@ PersonType; InjectablePerson; initializer; argumentName:ArgumentType; ArgumentTy
 
 import Swinject
 
-extension ResolverType {
+extension Resolver {
 
-    public func resolveInjectablePerson_initializer(argumentName: ArgumentType, argumenttypewithoutspecificname: ArgumentTypeWithoutSpecificName, title: String, string: String) -> InjectablePerson {
+    func resolveInjectablePerson_initializer(argumentName: ArgumentType, argumenttypewithoutspecificname: ArgumentTypeWithoutSpecificName, title: String, string: String) -> InjectablePerson {
         return self.resolve(PersonType.self, name: "initializer", arguments: argumentName, argumenttypewithoutspecificname, title, string) as! InjectablePerson
     }
 }
 
 extension Container {
 
-    public func registerInjectablePerson_initializer(registerClosure: (_ resolver: ResolverType, _ argumentName: ArgumentType, _ argumenttypewithoutspecificname: ArgumentTypeWithoutSpecificName, _ title: String, _ string: String) -> (InjectablePerson)) -> ServiceEntry<PersonType> {
+    @discardableResult func registerInjectablePerson_initializer(registerClosure: @escaping (_ resolver: Resolver, _ argumentName: ArgumentType, _ argumenttypewithoutspecificname: ArgumentTypeWithoutSpecificName, _ title: String, _ string: String) -> (InjectablePerson)) -> ServiceEntry<PersonType> {
         return self.register(PersonType.self, name: "initializer", factory: registerClosure)
     }
 }
