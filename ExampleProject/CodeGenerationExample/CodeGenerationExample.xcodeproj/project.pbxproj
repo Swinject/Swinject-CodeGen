@@ -207,12 +207,13 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0800;
+				LastUpgradeCheck = 0810;
 				ORGANIZATIONNAME = swinject;
 				TargetAttributes = {
 					840B7FDC1CDBA373008CA97E = {
 						CreatedOnToolsVersion = 7.3;
 						LastSwiftMigration = 0800;
+						ProvisioningStyle = Manual;
 					};
 					8431D8AA1CDBB47E00BB0679 = {
 						CreatedOnToolsVersion = 7.3;
@@ -474,8 +475,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 278CB160078A5F46226D1DF1 /* Pods-CodeGenerationExample.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = CodeGenerationExample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = swinject.CodeGenerationExample;
@@ -488,8 +489,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B53C73B83EE93F03F8DBFE12 /* Pods-CodeGenerationExample.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = CodeGenerationExample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = swinject.CodeGenerationExample;
