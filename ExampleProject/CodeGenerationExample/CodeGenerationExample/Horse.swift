@@ -1,5 +1,5 @@
-class Horse: AnimalType {
-    var name: String?
+public class Horse: AnimalType {
+    public var name: String?
     var running: Bool
 
     convenience init(name: String) {
@@ -11,7 +11,7 @@ class Horse: AnimalType {
         self.running = running
     }
 
-    func sound() -> String {
+    public func sound() -> String {
         return "Whinny!"
     }
 }

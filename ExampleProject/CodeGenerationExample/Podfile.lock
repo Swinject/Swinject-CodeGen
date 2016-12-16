@@ -1,23 +1,12 @@
 PODS:
-  - Swinject (1.1.1)
-  - Swinject-CodeGen (0.3.0):
-    - Swinject
+  - Swinject (2.0.0-beta.3)
 
 DEPENDENCIES:
-  - Swinject
-  - Swinject-CodeGen (from `https://github.com/Swinject/Swinject-CodeGen.git`)
-
-EXTERNAL SOURCES:
-  Swinject-CodeGen:
-    :git: https://github.com/Swinject/Swinject-CodeGen.git
-
-CHECKOUT OPTIONS:
-  Swinject-CodeGen:
-    :commit: 234b37c31947745bd5888eaff329ee616b67c7f9
-    :git: https://github.com/Swinject/Swinject-CodeGen.git
+  - Swinject (= 2.0.0-beta.3)
 
 SPEC CHECKSUMS:
-  Swinject: 8c1b46e49c604f8c5c1f45f92ef314d3736bbef4
-  Swinject-CodeGen: 563553e90481b0342b0d6d0a5e2cd220baaca47f
+  Swinject: a94dd23e05c7b557e53ee4e0f795f15cba19c7df
 
-COCOAPODS: 0.39.0
+PODFILE CHECKSUM: 25ea31cdf4e07cb292354476c6e39c7cac018744
+
+COCOAPODS: 1.1.1

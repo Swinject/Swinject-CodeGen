@@ -2,7 +2,7 @@
 
 import Swinject
 
-extension Resolvable {
+extension Resolver {
 
     func resolvePersonType() -> PersonType {
         return self.resolve(PersonType.self)!
@@ -11,7 +11,7 @@ extension Resolvable {
 
 extension Container {
 
-    func registerPersonType(registerClosure: (resolver: ResolverType) -> (PersonType)) -> ServiceEntry<PersonType> {
+    @discardableResult func registerPersonType(registerClosure: @escaping (_ resolver: Resolver) -> (PersonType)) -> ServiceEntry<PersonType> {
         return self.register(PersonType.self, factory: registerClosure)
     }
 }

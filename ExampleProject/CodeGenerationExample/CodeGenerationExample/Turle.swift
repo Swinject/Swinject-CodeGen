@@ -1,11 +1,11 @@
-struct Turtle: AnimalType {
-    var name: String?
+public struct Turtle: AnimalType {
+    public var name: String?
 
     init(name: String?) {
         self.name = name
     }
 
-    func sound() -> String {
+    public func sound() -> String {
         return "Ninja!"
     }
 }

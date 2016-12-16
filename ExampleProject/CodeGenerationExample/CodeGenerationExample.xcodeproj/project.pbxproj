@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		33CAAEB6C179A144128BF84F /* Pods_CodeGenerationExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD73605662ECA84FC3EAF4D4 /* Pods_CodeGenerationExample.framework */; };
 		840B7FE11CDBA373008CA97E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840B7FE01CDBA373008CA97E /* AppDelegate.swift */; };
 		840B7FE31CDBA373008CA97E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840B7FE21CDBA373008CA97E /* ViewController.swift */; };
 		840B7FE61CDBA373008CA97E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 840B7FE41CDBA373008CA97E /* Main.storyboard */; };
@@ -23,7 +24,6 @@
 		8431D8A31CDBAB4800BB0679 /* CodeGenerationDefinition.csv in Resources */ = {isa = PBXBuildFile; fileRef = 8431D8A21CDBAB4800BB0679 /* CodeGenerationDefinition.csv */; };
 		8431D8A61CDBAC7100BB0679 /* ExampleContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8431D8A51CDBAC7100BB0679 /* ExampleContainer.swift */; };
 		8431D8AE1CDBB47E00BB0679 /* CodeGenerationExampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8431D8AD1CDBB47E00BB0679 /* CodeGenerationExampleTests.swift */; };
-		EB11BF958F6A888FEC7598D2 /* Pods_CodeGenerationExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1835EE378081E9C8CAC576A5 /* Pods_CodeGenerationExample.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,9 +37,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		143F4F7AB02FBB2D7D18032B /* Pods-CodeGenerationExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CodeGenerationExample.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CodeGenerationExample/Pods-CodeGenerationExample.debug.xcconfig"; sourceTree = "<group>"; };
-		1835EE378081E9C8CAC576A5 /* Pods_CodeGenerationExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CodeGenerationExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		7B6430225DC0CBE5F18BB1D8 /* Pods-CodeGenerationExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CodeGenerationExample.release.xcconfig"; path = "Pods/Target Support Files/Pods-CodeGenerationExample/Pods-CodeGenerationExample.release.xcconfig"; sourceTree = "<group>"; };
+		278CB160078A5F46226D1DF1 /* Pods-CodeGenerationExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CodeGenerationExample.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CodeGenerationExample/Pods-CodeGenerationExample.debug.xcconfig"; sourceTree = "<group>"; };
 		840B7FDD1CDBA373008CA97E /* CodeGenerationExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CodeGenerationExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		840B7FE01CDBA373008CA97E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		840B7FE21CDBA373008CA97E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -60,6 +58,8 @@
 		8431D8AB1CDBB47E00BB0679 /* CodeGenerationExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CodeGenerationExampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8431D8AD1CDBB47E00BB0679 /* CodeGenerationExampleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeGenerationExampleTests.swift; sourceTree = "<group>"; };
 		8431D8AF1CDBB47E00BB0679 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B53C73B83EE93F03F8DBFE12 /* Pods-CodeGenerationExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CodeGenerationExample.release.xcconfig"; path = "Pods/Target Support Files/Pods-CodeGenerationExample/Pods-CodeGenerationExample.release.xcconfig"; sourceTree = "<group>"; };
+		FD73605662ECA84FC3EAF4D4 /* Pods_CodeGenerationExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CodeGenerationExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,7 +67,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EB11BF958F6A888FEC7598D2 /* Pods_CodeGenerationExample.framework in Frameworks */,
+				33CAAEB6C179A144128BF84F /* Pods_CodeGenerationExample.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -81,10 +81,10 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		47FBD271FB037943E42471E7 /* Frameworks */ = {
+		325EACE6E3F7363A4A78F5E4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				1835EE378081E9C8CAC576A5 /* Pods_CodeGenerationExample.framework */,
+				FD73605662ECA84FC3EAF4D4 /* Pods_CodeGenerationExample.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -95,8 +95,8 @@
 				840B7FDF1CDBA373008CA97E /* CodeGenerationExample */,
 				8431D8AC1CDBB47E00BB0679 /* CodeGenerationExampleTests */,
 				840B7FDE1CDBA373008CA97E /* Products */,
-				9C90A5DDE5ECF84F38B92C3F /* Pods */,
-				47FBD271FB037943E42471E7 /* Frameworks */,
+				CA9544A51692E2D855FCF3C4 /* Pods */,
+				325EACE6E3F7363A4A78F5E4 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -149,11 +149,11 @@
 			path = CodeGenerationExampleTests;
 			sourceTree = "<group>";
 		};
-		9C90A5DDE5ECF84F38B92C3F /* Pods */ = {
+		CA9544A51692E2D855FCF3C4 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				143F4F7AB02FBB2D7D18032B /* Pods-CodeGenerationExample.debug.xcconfig */,
-				7B6430225DC0CBE5F18BB1D8 /* Pods-CodeGenerationExample.release.xcconfig */,
+				278CB160078A5F46226D1DF1 /* Pods-CodeGenerationExample.debug.xcconfig */,
+				B53C73B83EE93F03F8DBFE12 /* Pods-CodeGenerationExample.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -165,13 +165,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 840B7FEF1CDBA373008CA97E /* Build configuration list for PBXNativeTarget "CodeGenerationExample" */;
 			buildPhases = (
+				225D6A5931B94CC443608E88 /* [CP] Check Pods Manifest.lock */,
 				8431D8A41CDBAB5F00BB0679 /* Swinject Codegeneration */,
-				87668E43493E1F8B77F96925 /* Check Pods Manifest.lock */,
 				840B7FD91CDBA373008CA97E /* Sources */,
 				840B7FDA1CDBA373008CA97E /* Frameworks */,
 				840B7FDB1CDBA373008CA97E /* Resources */,
-				0AE892BC6DF6F5EC87622CAB /* Embed Pods Frameworks */,
-				4D3504C6073B5B8D15282CD4 /* Copy Pods Resources */,
+				33554BBDD15CA7B6D2A92324 /* [CP] Embed Pods Frameworks */,
+				8C9F43EDFD8315E965D0C7D6 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -207,14 +207,17 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0730;
+				LastUpgradeCheck = 0810;
 				ORGANIZATIONNAME = swinject;
 				TargetAttributes = {
 					840B7FDC1CDBA373008CA97E = {
 						CreatedOnToolsVersion = 7.3;
+						LastSwiftMigration = 0800;
+						ProvisioningStyle = Manual;
 					};
 					8431D8AA1CDBB47E00BB0679 = {
 						CreatedOnToolsVersion = 7.3;
+						LastSwiftMigration = 0800;
 						TestTargetID = 840B7FDC1CDBA373008CA97E;
 					};
 				};
@@ -260,34 +263,34 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		0AE892BC6DF6F5EC87622CAB /* Embed Pods Frameworks */ = {
+		225D6A5931B94CC443608E88 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Embed Pods Frameworks";
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		33554BBDD15CA7B6D2A92324 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CodeGenerationExample/Pods-CodeGenerationExample-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		4D3504C6073B5B8D15282CD4 /* Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CodeGenerationExample/Pods-CodeGenerationExample-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		8431D8A41CDBAB5F00BB0679 /* Swinject Codegeneration */ = {
@@ -302,21 +305,21 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "$PODS_ROOT/Swinject-CodeGen/swinject_codegen -i \"${SRCROOT}/CodeGenerationExample/CodeGenerationDefinition.csv\" -o \"${SRCROOT}/CodeGenerationExample/ExampleContainer.swift\"";
+			shellScript = "# Uncomment this for usage with cocoapods\n#$PODS_ROOT/Swinject-CodeGen/swinject_codegen -i \"${SRCROOT}/CodeGenerationExample/CodeGenerationDefinition.csv\" -o \"${SRCROOT}/CodeGenerationExample/ExampleContainer.swift\"\n\n# Use local bin\n../../bin/swinject_codegen -i \"${SRCROOT}/CodeGenerationExample/CodeGenerationDefinition.csv\" -o \"${SRCROOT}/CodeGenerationExample/ExampleContainer.swift\"";
 		};
-		87668E43493E1F8B77F96925 /* Check Pods Manifest.lock */ = {
+		8C9F43EDFD8315E965D0C7D6 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CodeGenerationExample/Pods-CodeGenerationExample-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -392,8 +395,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -438,8 +443,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -458,6 +465,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -465,25 +473,29 @@
 		};
 		840B7FF01CDBA373008CA97E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 143F4F7AB02FBB2D7D18032B /* Pods-CodeGenerationExample.debug.xcconfig */;
+			baseConfigurationReference = 278CB160078A5F46226D1DF1 /* Pods-CodeGenerationExample.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = CodeGenerationExample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = swinject.CodeGenerationExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
 		840B7FF11CDBA373008CA97E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7B6430225DC0CBE5F18BB1D8 /* Pods-CodeGenerationExample.release.xcconfig */;
+			baseConfigurationReference = B53C73B83EE93F03F8DBFE12 /* Pods-CodeGenerationExample.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = CodeGenerationExample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = swinject.CodeGenerationExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -495,6 +507,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = swinject.CodeGenerationExampleTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CodeGenerationExample.app/CodeGenerationExample";
 			};
 			name = Debug;
@@ -507,6 +520,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = swinject.CodeGenerationExampleTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CodeGenerationExample.app/CodeGenerationExample";
 			};
 			name = Release;
@@ -539,6 +553,7 @@
 				8431D8B31CDBB47E00BB0679 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
