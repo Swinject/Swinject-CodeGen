@@ -5,10 +5,10 @@ branches:
     - master
 install:
   - bundle install
-  - pod install --project-directory=ExampleProject/CodeGenerationExample
+  - bundle exec pod install --project-directory=ExampleProject/CodeGenerationExample
 script:
   - ruby -X Tests test.rb
-  - scan --scheme CodeGenerationExample --workspace ExampleProject/CodeGenerationExample/CodeGenerationExample.xcworkspace  -x "TOOLCHAINS=com.apple.dt.toolchain.Swift_3_0"
+  - bundle exec scan --scheme CodeGenerationExample --workspace ExampleProject/CodeGenerationExample/CodeGenerationExample.xcworkspace  -x "TOOLCHAINS=com.apple.dt.toolchain.Swift_3_0"
 rvm:
   - 2.0
   - 2.3
