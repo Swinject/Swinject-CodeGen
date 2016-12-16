@@ -9,7 +9,7 @@ install:
   - bundle exec pod install --project-directory=ExampleProject/CodeGenerationExample
 script:
   - ruby -X Tests test.rb
-  - bundle exec scan --scheme CodeGenerationExample --workspace ExampleProject/CodeGenerationExample/CodeGenerationExample.xcworkspace  -x "TOOLCHAINS=com.apple.dt.toolchain.Swift_3_0"
+  - scan --scheme CodeGenerationExample --workspace ExampleProject/CodeGenerationExample/CodeGenerationExample.xcworkspace
 rvm:
   - 2.0
   - 2.3
