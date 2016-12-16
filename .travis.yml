@@ -5,6 +5,7 @@ branches:
     - master
 install:
   - bundle install
+  - bundle exec pod repo update
   - bundle exec pod install --project-directory=ExampleProject/CodeGenerationExample
 script:
   - ruby -X Tests test.rb
