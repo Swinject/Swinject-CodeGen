@@ -1,0 +1,86 @@
+# Customise this file, documentation can be found here:
+# https://github.com/fastlane/fastlane/tree/master/fastlane/docs
+# All available actions: https://docs.fastlane.tools/actions
+# can also be listed using the `fastlane actions` command
+
+# Change the syntax highlighting to Ruby
+# All lines starting with a # are ignored when running `fastlane`
+
+# If you want to automatically update fastlane if a new version is available:
+# update_fastlane
+
+# This is the minimum version number required.
+# Update this, if you use features of a newer version
+fastlane_version "2.14.2"
+
+default_platform :ios
+
+platform :ios do
+  before_all do
+    # ENV["SLACK_URL"] = "https://hooks.slack.com/services/..."
+  end
+
+  desc "Updates the Readme file with source examples"
+  lane :updateReadme do
+    sh("cd ../Support;sh updateReadme.sh")
+  end
+
+  desc "Run Tests"
+  lane :runTests do
+    sh("cd ../Tests;ruby test.rb")
+  end
+
+  desc "Release Pod Version"
+  lane :podRelease do
+    sh("cd ..; pod lib lint")
+
+    prompt(
+      text: "Please edit the Podspec, update the Version number, save and press a key. Do not commit!",
+      multi_line_end_keyword: "END"
+    )
+
+    versionToRelease = prompt(
+      text: "Version to Release (x.x.x): ",
+      multi_line_end_keyword: "END"
+    )
+
+    git_commit(path: "../Swinject-CodeGen.podspec", message: "Release #{versionToRelease}")
+
+    add_git_tag(
+      tag: "#{versionToRelease}"
+    )
+
+    push_to_git_remote()
+
+    sh ("cd ..; pod trunk register wlborg@gmx.de 'Wolfgang Lutz' --description='macbook'")
+
+    prompt(
+      text: "A new session for pod trunk was requested. Activate it from email and press a key.",
+      multi_line_end_keyword: "END"
+    )
+
+    sh ("cd ..; pod trunk push Swinject-CodeGen.podspec")
+  end
+
+  after_all do |lane|
+    # This block is called, only if the executed lane was successful
+
+    # slack(
+    #   message: "Successfully deployed new App Update."
+    # )
+  end
+
+  error do |lane, exception|
+    # slack(
+    #   message: exception.message,
+    #   success: false
+    # )
+  end
+end
+
+
+# More information about multiple platforms in fastlane: https://github.com/fastlane/fastlane/blob/master/fastlane/docs/Platforms.md
+# All available actions: https://docs.fastlane.tools/actions
+
+# fastlane reports which actions are used
+# No personal data is sent or shared. Learn more at https://github.com/fastlane/enhancer

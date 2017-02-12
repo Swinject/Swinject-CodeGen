@@ -28,3 +28,4 @@ test_output
 ExampleScript/csvMigration.sh
 ExampleScript/ymlMigration.sh
 /ExampleProject/CodeGenerationExample/CodeGenerationExample.xcodeproj/project.xcworkspace/xcuserdata/admin.xcuserdatad/UserInterfaceState.xcuserstate
+/fastlane/report.xml
