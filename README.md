@@ -381,7 +381,7 @@ We currently use the code generation in two medium-sized apps across tvOS and iO
 We found our code to become much more convenient to read and write, due to reduced duplication and autocompletion.
 We also have a much better overview the classes available through dependency injection.
 Changing some definition immediately leads to information, where an error will occur.
-We were able to replace all our occurences of `.resolve(` and `.register(` using the current implementation.
+We were able to replace all our occurrences of `.resolve(` and `.register(` using the current implementation.
 
 ## Contributors
 The original idea for combining CodeGeneration and Swinject came from [Daniel Dengler](https://github.com/ddengler), [David Kraus](https://github.com/davidkraus) and [Wolfgang Lutz](https://github.com/lutzifer).
