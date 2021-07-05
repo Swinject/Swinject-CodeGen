@@ -385,3 +385,4 @@ We were able to replace all our occurrences of `.resolve(` and `.register(` usin
 
 ## Contributors
 The original idea for combining CodeGeneration and Swinject came from [Daniel Dengler](https://github.com/ddengler), [David Kraus](https://github.com/davidkraus) and [Wolfgang Lutz](https://github.com/lutzifer).
+
